@@ -1,5 +1,6 @@
 import { useEffect, useState, type MouseEvent } from 'react'
 import { useStore } from 'zustand'
+import { Analytics } from '@vercel/analytics/react'
 
 import type { BreathConfig } from './domain/session-engine'
 import { createTranslator } from './i18n/localization'
@@ -78,6 +79,7 @@ function App() {
           onExit={meditationSession.stop}
           secondsRemaining={meditationSession.preparationSecondsRemaining}
         />
+        <Analytics />
       </div>
     )
   }
@@ -90,6 +92,7 @@ function App() {
           onExit={meditationSession.stop}
           state={meditationSession.activeState}
         />
+        <Analytics />
       </div>
     )
   }
@@ -159,6 +162,7 @@ function App() {
           </button>
         </section>
       )}
+      <Analytics />
     </main>
   )
 }
