@@ -20,6 +20,12 @@ test('serves install metadata and completes a shortened session offline', async 
     'Breathing',
   )
 
+  const serviceWorkerSource = await page.evaluate(async () => {
+    const response = await fetch('/sw.js')
+    return response.text()
+  })
+  expect(serviceWorkerSource).toContain('clientsClaim')
+
   await page.getByRole('button', { name: 'Налаштування' }).click()
   await page.getByRole('slider', { name: 'Вдих' }).fill('1')
   await page.getByRole('slider', { name: 'Пауза' }).nth(0).fill('0')

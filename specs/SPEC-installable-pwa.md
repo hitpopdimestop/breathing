@@ -6,9 +6,9 @@ Make Breathing installable from a mobile browser, launchable from the home scree
 
 ## Contract
 
-The PWA includes a manifest with Breathing name, standalone display, theme colors, start URL, and purpose-built icons. A service worker caches the deployable app shell and required local assets. Updates must not interrupt an active session; a new version may be offered after the session finishes or on the next launch.
+The PWA includes a manifest with Breathing name, standalone display, theme colors, start URL, and purpose-built icons. A service worker caches the deployable app shell and required local assets. Updates activate automatically without interrupting an active session; the visible shell reload waits until the session finishes or the next launch.
 
-The install experience is entirely browser- and system-controlled. If the browser exposes a native install affordance, the person may accept it. Breathing does not render a custom install banner, help screen, or fallback instructions. During an active session, the app may request Screen Wake Lock when supported; failure is silent and never blocks a session.
+The install experience is entirely browser- and system-controlled. If the browser exposes a native install affordance, the person may accept it. Breathing does not render a custom install banner, help screen, or fallback instructions. Service-worker updates use auto-update behavior; a fresh shell reloads automatically when no session is active, and waits until the current session ends otherwise. During an active session, the app may request Screen Wake Lock when supported; failure is silent and never blocks a session.
 
 ## Acceptance Criteria
 
@@ -16,6 +16,7 @@ The install experience is entirely browser- and system-controlled. If the browse
 - An installed app opens without browser chrome and reaches the start screen.
 - After the first successful load, a full shortened session completes with the device offline.
 - A service-worker update does not replace the active app mid-session.
+- A new service-worker version activates without a manual update prompt.
 
 ## Testing
 
@@ -30,4 +31,3 @@ Inspect manifest metadata, install on at least one Android and one iOS device wh
 ## Open Questions
 
 - Whether the best-effort wake lock behaves acceptably on the target mobile browsers.
-- Which service-worker update prompt behavior is least disruptive after device testing.

@@ -99,7 +99,6 @@ Tests live beside source as `*.test.ts(x)`; Playwright scenarios live in `e2e/*.
 
 - Does best-effort Screen Wake Lock behave acceptably on the target mobile browsers?
 - Does target-device testing reveal a reason to replace the accepted CSS tide with Canvas 2D?
-- Does the service-worker update strategy preserve an active session on each target browser?
 
 ## Module Specifications
 
