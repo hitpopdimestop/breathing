@@ -1,31 +1,62 @@
 # Breathing
 
-Breathing is a planned mobile-first breathing meditation PWA. Its default session follows a `4–4–4–4` rhythm for 15 complete cycles (`04:00`) and uses a calm full-screen “living tide” as the breathing guide.
+<p align="center">
+  A calm, offline-first breathing meditation for the web.
+  <br />
+  <a href="https://breathing-sandy.vercel.app"><strong>Open the live app →</strong></a>
+</p>
 
-## MVP
+Breathing guides a session through a simple `4–4–4–4` rhythm: inhale, pause, exhale, pause. The default session runs for 15 complete cycles (`04:00`) and uses a slow, full-screen tide as its visual cue.
 
-- One-tap default session with configurable phase lengths and cycle count
+## Features
+
+- One-tap start with ready-to-use defaults
+- Adjustable inhale, exhale, pause, and cycle durations
 - Ukrainian and English interfaces
-- Local settings persisted on the device
-- Installable PWA with offline sessions
-- Responsive mobile and desktop layouts
-- No accounts, backend, presets, streaks, or medical claims
+- Smooth countdown and animated full-screen tide
+- Settings persisted locally on the device
+- Installable PWA with offline support
+- Responsive layouts for mobile, tablet, and desktop
+- No account, backend, or medical claims
 
-## Planned Stack
+## Stack
 
-React, TypeScript, Vite, Zustand, and `vite-plugin-pwa`. The tide renderer will be selected after a focused CSS-versus-Canvas motion prototype.
+- React 19 and TypeScript
+- Vite
+- Zustand with local persistence
+- CSS tide renderer
+- Vite PWA and Workbox
+- Vitest and Playwright
 
-## Project Status
+## Run locally
 
-Product planning and architecture are complete; the formal specification is approved, and Tasks 1–8 are complete. Release checks and publishing are the next implementation increment.
+```bash
+yarn install
+yarn dev
+```
 
-## Documentation
+Then open `http://127.0.0.1:5173`.
+
+Useful checks:
+
+```bash
+yarn test          # unit tests
+yarn test:e2e      # browser tests
+yarn test:pwa      # production PWA and offline flow
+yarn typecheck     # TypeScript
+yarn lint          # Oxlint
+yarn build
+```
+
+## Project docs
 
 - [Product concept](docs/ideas/breathing.md)
 - [Capability map](CAPABILITY-MAP.md)
 - [Project specification](SPEC.md)
-- [Architecture decision](docs/decisions/001-web-application-stack.md)
+- [Architecture decisions](docs/decisions/)
 - [Implementation plan](tasks/plan.md)
-- [Task checklist](tasks/todo.md)
-- [Contributor guidelines](AGENTS.md)
-- [Agent skills](.agents/skills/)
+- [Contributor guide](AGENTS.md)
+
+## Status
+
+The MVP is live at [breathing-sandy.vercel.app](https://breathing-sandy.vercel.app). The project is intentionally small and focused; future ideas such as presets, sound, vibration, and richer analytics remain separate from the core experience.
