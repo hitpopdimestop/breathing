@@ -26,3 +26,4 @@ Product planning and architecture are complete; implementation has not started. 
 - [Implementation plan](tasks/plan.md)
 - [Task checklist](tasks/todo.md)
 - [Contributor guidelines](AGENTS.md)
+- [Agent skills](.agents/skills/)

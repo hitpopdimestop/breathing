@@ -1,5 +1,4 @@
-# Local agent configuration
-.agents/
+# Local Codex configuration
 .codex/
 
 # Dependencies and builds

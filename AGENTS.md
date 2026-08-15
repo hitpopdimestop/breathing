@@ -6,6 +6,8 @@ The repository is currently documentation-first. Product scope lives in `docs/id
 
 The planned application structure is:
 
+- `.agents/skills/`: project-local development workflows
+- `.agents/references/`: shared quality and verification checklists
 - `src/domain/`: pure breathing-cycle and timing logic
 - `src/store/`: Zustand settings store and persistence
 - `src/ui/`: React screens and visual components
