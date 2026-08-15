@@ -1,15 +1,18 @@
-import { APP_NAME } from './app-contract'
+import { createTranslator, getInitialLanguage } from './i18n/localization'
 import './App.css'
 
 function App() {
+  const language = getInitialLanguage()
+  const t = createTranslator(language)
+
   return (
-    <main className="shell">
+    <main className="shell" lang={language}>
       <section className="welcome" aria-labelledby="app-title">
-        <p className="eyebrow">04–04–04–04</p>
-        <h1 id="app-title">{APP_NAME}</h1>
-        <p className="intro">Спокійний ритм дихання починається з одного натискання.</p>
+        <p className="eyebrow">{t('pattern')}</p>
+        <h1 id="app-title">{t('appName')}</h1>
+        <p className="intro">{t('intro')}</p>
         <button className="start-button" type="button">
-          Почати
+          {t('start')}
         </button>
       </section>
     </main>

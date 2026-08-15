@@ -42,9 +42,9 @@ This checklist follows the approved [`SPEC.md`](../SPEC.md) and [`tasks/plan.md`
 
 **Acceptance criteria:**
 
-- [ ] Both dictionaries have identical keys and concise phase labels.
-- [ ] Browser locale maps `uk` to Ukrainian and every other locale to English.
-- [ ] No component contains inline translated strings; missing keys fail in development.
+- [x] Both dictionaries have identical keys and concise phase labels.
+- [x] Browser locale maps `uk` to Ukrainian and every other locale to English.
+- [x] No component contains inline translated strings; missing keys fail in development.
 
 **Verification:** Test key parity and render start, settings, active, and completion states in both languages.
 

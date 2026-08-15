@@ -17,7 +17,7 @@ React, TypeScript, Vite, Zustand, and `vite-plugin-pwa`. The tide renderer will 
 
 ## Project Status
 
-Product planning and architecture are complete; the formal specification is approved, and Tasks 1–2 are complete. Typed localization is the next implementation increment.
+Product planning and architecture are complete; the formal specification is approved, and Tasks 1–3 are complete. User settings and persistence are the next implementation increment.
 
 ## Documentation
 
