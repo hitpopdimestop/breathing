@@ -80,6 +80,7 @@
 .welcome {
   width: min(100%, 40rem);
   margin: auto 0;
+  transform: translateY(clamp(-5rem, -8.5vh, -3rem));
   padding: clamp(2.25rem, 10vw, 5rem) clamp(1.5rem, 8vw, 4rem);
   border: 1px solid rgb(238 242 213 / 38%);
   border-radius: 2rem;

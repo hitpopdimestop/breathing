@@ -10,10 +10,14 @@ test('fits the start screen at mobile and desktop widths', async ({ page }) => {
 
     const dimensions = await page.evaluate(() => ({
       innerWidth: window.innerWidth,
+      innerHeight: window.innerHeight,
       scrollWidth: document.documentElement.scrollWidth,
+      welcome: document.querySelector('.welcome')?.getBoundingClientRect(),
     }))
 
     expect(dimensions.scrollWidth).toBeLessThanOrEqual(dimensions.innerWidth)
+    const welcomeCenter = (dimensions.welcome?.top ?? 0) + (dimensions.welcome?.height ?? 0) / 2
+    expect(Math.abs(welcomeCenter - dimensions.innerHeight / 2)).toBeLessThan(12)
     await expect(page.getByRole('heading', { name: 'Breathing' })).toBeVisible()
   }
 })
