@@ -22,6 +22,31 @@ test('fits the start screen at mobile and desktop widths', async ({ page }) => {
   }
 })
 
+test('stays within a narrow viewport when mobile page zoom reduces layout width', async ({ page }) => {
+  await page.setViewportSize({ width: 280, height: 700 })
+  await page.goto('/')
+
+  const dimensions = await page.evaluate(() => ({
+    innerWidth: window.innerWidth,
+    scrollWidth: document.documentElement.scrollWidth,
+    welcome: document.querySelector('.welcome')?.getBoundingClientRect(),
+  }))
+
+  expect(dimensions.scrollWidth).toBeLessThanOrEqual(dimensions.innerWidth)
+  expect(dimensions.welcome?.left).toBeGreaterThanOrEqual(0)
+  expect(dimensions.welcome?.right).toBeLessThanOrEqual(dimensions.innerWidth)
+
+  await page.getByRole('button', { name: 'Налаштування' }).click()
+  const settingsDimensions = await page.evaluate(() => ({
+    innerWidth: window.innerWidth,
+    scrollWidth: document.documentElement.scrollWidth,
+    close: document.querySelector('.settings-heading .text-button')?.getBoundingClientRect(),
+  }))
+
+  expect(settingsDimensions.scrollWidth).toBeLessThanOrEqual(settingsDimensions.innerWidth)
+  expect(settingsDimensions.close?.right).toBeLessThanOrEqual(settingsDimensions.innerWidth)
+})
+
 test('keeps the active tide full-screen and content centered', async ({ page }) => {
   for (const viewport of [
     { width: 320, height: 700 },

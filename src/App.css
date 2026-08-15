@@ -354,3 +354,14 @@ input[type='range'] {
     margin-block: 1rem 1.25rem;
   }
 }
+
+@media (max-width: 20rem) {
+  .settings-heading {
+    flex-wrap: wrap;
+    row-gap: 0.5rem;
+  }
+
+  .settings-heading .text-button {
+    margin-left: auto;
+  }
+}
