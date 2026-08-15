@@ -105,6 +105,24 @@ test('centers the language controls without a redundant brand label', async ({ p
   }
 })
 
+test('keeps the settings control as an outlined white button', async ({ page }) => {
+  await page.goto('/')
+
+  const styles = await page.locator('.settings-button').evaluate((element) => {
+    const computed = getComputedStyle(element)
+
+    return {
+      backgroundColor: computed.backgroundColor,
+      color: computed.color,
+      boxShadow: computed.boxShadow,
+    }
+  })
+
+  expect(styles.backgroundColor).toBe('rgba(0, 0, 0, 0)')
+  expect(styles.color).toBe('rgb(238, 242, 213)')
+  expect(styles.boxShadow).toBe('none')
+})
+
 test('closes settings with Escape or an outside click', async ({ page }) => {
   await page.goto('/')
   await page.getByRole('button', { name: 'Налаштування' }).click()

@@ -59,11 +59,11 @@
 .settings-button {
   width: 2.25rem;
   height: 2.25rem;
-  border: 1px solid rgb(238 242 213 / 65%);
+  border: 1px solid #eef2d5;
   border-radius: 50%;
-  color: #30405d;
-  background: #b5e1d2;
-  box-shadow: 0 0.6rem 1.2rem rgb(48 64 93 / 16%);
+  color: #eef2d5;
+  background: transparent;
+  box-shadow: none;
   font-size: 1.25rem;
   transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
 }
@@ -71,8 +71,8 @@
 .settings-button:hover,
 .settings-button[aria-expanded='true'] {
   transform: translateY(-1px);
-  background: #eef2d5;
-  box-shadow: 0 0.8rem 1.5rem rgb(48 64 93 / 22%);
+  background: rgb(238 242 213 / 12%);
+  box-shadow: none;
 }
 
 .language-button:focus-visible,
