@@ -62,6 +62,26 @@ test('keeps the active tide full-screen and content centered', async ({ page }) 
   }
 })
 
+test('optically aligns the phase label with its countdown', async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 700 })
+  await page.goto('/')
+  await page.getByRole('button', { name: 'Почати' }).click()
+  await expect(page.getByText('Вдих')).toBeVisible({ timeout: 8000 })
+
+  const centers = await page.evaluate(() => {
+    const label = document.querySelector('.session-label')?.getBoundingClientRect()
+    const countdown = document.querySelector('.session-countdown')?.getBoundingClientRect()
+
+    return {
+      label: (label?.left ?? 0) + (label?.width ?? 0) / 2,
+      countdown: (countdown?.left ?? 0) + (countdown?.width ?? 0) / 2,
+    }
+  })
+
+  expect(centers.label).toBeGreaterThan(centers.countdown)
+  expect(centers.label - centers.countdown).toBeLessThan(4)
+})
+
 test('gives mobile controls comfortable touch targets', async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 700 })
   await page.goto('/')

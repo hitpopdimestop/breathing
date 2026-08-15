@@ -292,6 +292,7 @@ input[type='range'] {
   font-weight: 650;
   letter-spacing: -0.08em;
   line-height: 0.9;
+  transform: translateX(-0.15rem);
   text-shadow: 0 0.15rem 0 rgb(238 242 213 / 50%);
 }
 
