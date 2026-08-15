@@ -47,6 +47,18 @@ test('stays within a narrow viewport when mobile page zoom reduces layout width'
   expect(settingsDimensions.close?.right).toBeLessThanOrEqual(settingsDimensions.innerWidth)
 })
 
+test('keeps the start card below controls in a short mobile viewport', async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 560 })
+  await page.goto('/')
+
+  const metrics = await page.evaluate(() => ({
+    header: document.querySelector('.app-header')?.getBoundingClientRect(),
+    welcome: document.querySelector('.welcome')?.getBoundingClientRect(),
+  }))
+
+  expect(metrics.welcome?.top).toBeGreaterThanOrEqual((metrics.header?.bottom ?? 0) + 8)
+})
+
 test('keeps the active tide full-screen and content centered', async ({ page }) => {
   for (const viewport of [
     { width: 320, height: 700 },

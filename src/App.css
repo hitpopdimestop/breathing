@@ -355,6 +355,14 @@ input[type='range'] {
   }
 }
 
+@media (max-width: 47.99rem) and (max-height: 40rem) {
+  .welcome,
+  .settings-panel {
+    margin-top: 0.5rem;
+    transform: none;
+  }
+}
+
 @media (max-width: 20rem) {
   .settings-heading {
     flex-wrap: wrap;
