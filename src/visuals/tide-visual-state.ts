@@ -34,7 +34,7 @@ function clamp(value: number): number {
 
 function interpolate(start: number, end: number, progress: number): number {
   const easedProgress = smoothstep(progress)
-  return Math.round((start + (end - start) * easedProgress) * 100) / 100
+  return start + (end - start) * easedProgress
 }
 
 function smoothstep(progress: number): number {

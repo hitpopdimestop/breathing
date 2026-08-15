@@ -7,7 +7,7 @@ import {
 } from '../domain/session-engine'
 
 const PREPARATION_DURATION_MS = 3000
-const TICK_INTERVAL_MS = 50
+const TICK_INTERVAL_MS = 16
 
 export type MeditationStatus = 'ready' | 'preparing' | 'active' | 'complete'
 

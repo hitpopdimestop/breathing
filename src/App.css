@@ -257,7 +257,6 @@ input[type='range'] {
   transform: translate3d(0, var(--tide-offset), 0);
   transform-origin: center top;
   filter: drop-shadow(0 -1rem 2rem rgb(238 242 213 / 18%));
-  transition: transform 120ms ease-in-out;
   will-change: transform;
 }
 
@@ -297,12 +296,6 @@ input[type='range'] {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .tide-fill {
-    transition: none;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
   .start-button {
     transition: none;
   }
@@ -319,6 +312,22 @@ input[type='range'] {
 }
 
 @media (max-width: 47.99rem) {
+  .language-switcher {
+    height: 2.875rem;
+    padding: 0;
+  }
+
+  .language-button {
+    min-width: 2.75rem;
+    min-height: 2.75rem;
+  }
+
+  .settings-button {
+    width: 2.75rem;
+    height: 2.75rem;
+    font-size: 1.35rem;
+  }
+
   .welcome {
     transform: translateY(clamp(-2.5rem, -5.5vh, -1.5rem));
   }

@@ -52,7 +52,28 @@ test('keeps the active tide full-screen and content centered', async ({ page }) 
     expect(metrics.tide?.height).toBe(metrics.innerHeight)
     expect(metrics.content?.left).toBeGreaterThanOrEqual(0)
     expect(metrics.content?.right).toBeLessThanOrEqual(metrics.innerWidth)
+
+    const tideStyles = await page.locator('.tide-fill').evaluate((element) => getComputedStyle(element))
+    expect(tideStyles.transitionDuration).toBe('0s')
   }
+})
+
+test('gives mobile controls comfortable touch targets', async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 700 })
+  await page.goto('/')
+
+  const metrics = await page.evaluate(() => ({
+    settingsButton: document.querySelector('.settings-button')?.getBoundingClientRect(),
+    languageSwitcher: document.querySelector('.language-switcher')?.getBoundingClientRect(),
+    languageButtons: [...document.querySelectorAll('.language-button')].map((button) =>
+      button.getBoundingClientRect(),
+    ),
+  }))
+
+  expect(metrics.settingsButton?.width).toBeGreaterThanOrEqual(44)
+  expect(metrics.settingsButton?.height).toBeGreaterThanOrEqual(44)
+  expect(metrics.languageSwitcher?.height).toBeGreaterThanOrEqual(44)
+  expect(metrics.languageButtons.every((button) => button.height >= 44)).toBe(true)
 })
 
 test('keeps the settings panel aligned with the welcome panel', async ({ page }) => {

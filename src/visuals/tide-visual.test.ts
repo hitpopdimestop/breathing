@@ -5,9 +5,16 @@ import { getTideVisualState } from './tide-visual-state'
 describe('tide visual phase mapping', () => {
   it('rises through inhale progress', () => {
     expect(getTideVisualState('inhale', 0)).toEqual({ level: 0, motion: 'rising' })
-    expect(getTideVisualState('inhale', 0.25)).toEqual({ level: 0.16, motion: 'rising' })
+    expect(getTideVisualState('inhale', 0.25)).toEqual({ level: 0.15625, motion: 'rising' })
     expect(getTideVisualState('inhale', 0.5)).toEqual({ level: 0.5, motion: 'rising' })
     expect(getTideVisualState('inhale', 1)).toEqual({ level: 1, motion: 'rising' })
+  })
+
+  it('keeps sub-percent progress for smooth rendering', () => {
+    const progress = 0.123
+    const expectedLevel = progress * progress * (3 - 2 * progress)
+
+    expect(getTideVisualState('inhale', progress).level).toBeCloseTo(expectedLevel, 6)
   })
 
   it('holds the upper level after inhale', () => {
@@ -19,7 +26,7 @@ describe('tide visual phase mapping', () => {
 
   it('recedes through exhale progress', () => {
     expect(getTideVisualState('exhale', 0)).toEqual({ level: 1, motion: 'falling' })
-    expect(getTideVisualState('exhale', 0.25)).toEqual({ level: 0.84, motion: 'falling' })
+    expect(getTideVisualState('exhale', 0.25)).toEqual({ level: 0.84375, motion: 'falling' })
     expect(getTideVisualState('exhale', 0.5)).toEqual({ level: 0.5, motion: 'falling' })
     expect(getTideVisualState('exhale', 1)).toEqual({ level: 0, motion: 'falling' })
   })
