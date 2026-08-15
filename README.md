@@ -17,11 +17,13 @@ React, TypeScript, Vite, Zustand, and `vite-plugin-pwa`. The tide renderer will 
 
 ## Project Status
 
-Product planning and architecture are complete; implementation has not started. Task 1 will scaffold the application and establish the `yarn` development, test, lint, type-check, build, and browser-test commands.
+Product planning and architecture are complete; the formal specification is approved, and implementation has not started. Task 1 will scaffold the application and establish the `yarn` development, test, lint, type-check, build, and browser-test commands.
 
 ## Documentation
 
 - [Product concept](docs/ideas/breathing.md)
+- [Capability map](CAPABILITY-MAP.md)
+- [Project specification](SPEC.md)
 - [Architecture decision](docs/decisions/001-web-application-stack.md)
 - [Implementation plan](tasks/plan.md)
 - [Task checklist](tasks/todo.md)

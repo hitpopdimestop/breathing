@@ -31,6 +31,8 @@ Task 1 will scaffold the React/TypeScript/Vite project. Until `package.json` exi
 
 Document any command changes in `README.md` and this file.
 
+Before implementation, read `SPEC.md` and the relevant module spec in `specs/`. Update the spec before changing behavior or scope.
+
 ## Coding Style & Naming Conventions
 
 Use TypeScript with two-space indentation and named exports. React components use PascalCase; functions, hooks, and Zustand actions use camelCase; files use kebab-case. Keep timer calculations pure and independent of React rendering or animation frames. Persist only breathing settings and language—never active-session state. Prefer CSS or platform APIs before adding visual libraries.

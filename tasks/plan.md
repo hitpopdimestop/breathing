@@ -1,126 +1,77 @@
 # Implementation Plan: Breathing
 
-## Overview
+Status: **Derived from the approved `SPEC.md`; ready for human review before implementation.**
 
-Створити mobile-first PWA для дихальних сесій із готовим ритмом `4–4–4–4`, тривалістю лише в повних циклах і повноекранною анімацією «живого припливу». Перший наскрізний результат має дозволяти відкрити апку, натиснути «Почати», пройти 15 циклів і побачити завершення без будь-яких додаткових налаштувань. Після встановлення той самий потік має працювати з домашнього екрана та без інтернету.
+## Outcome
 
-## Product Decisions
+Deliver a mobile-first, installable Breathing PWA with a one-tap `4–4–4–4` session, 15 complete cycles (`04:00`), Ukrainian and English interfaces, local settings, an organic full-screen tide, and offline operation after the first successful load. Implementation starts only after this plan and `tasks/todo.md` are reviewed.
 
-- Назва продукту: **Breathing**.
-- Інтерфейс будується на React і TypeScript, а статична збірка — на Vite.
-- Zustand з `persist` зберігає лише конфігурацію дихання та мову; runtime-state активної сесії не зберігається.
-- `vite-plugin-pwa` відповідає за manifest, service worker, встановлення та офлайн-кеш.
-- Спосіб рендерингу припливу обирається окремим motion-прототипом; Paper.js не додається наперед.
-- Стандартна конфігурація: `4–4–4–4`, 15 циклів, `04:00`.
-- Загальна тривалість завжди дорівнює цілій кількості циклів.
-- Під час сесії показуються лише назва фази та її секундний відлік.
-- Загальний час, пауза й вихід у сесії не показуються.
-- Перехід між фазами є частиною анімації й не додає часу.
-- Уся логіка MVP працює в браузері; серверна частина не потрібна.
-- PWA, встановлення на домашній екран та офлайн-робота входять у MVP.
-- Останні налаштування й мова зберігаються в `localStorage` конкретного пристрою; акаунта та синхронізації немає.
-- Іконка є власним простим знаком на основі припливу й палітри «ранковий туман», а не стороннім ліцензованим активом.
-- Українська й англійська підтримуються з першої версії.
+## Fixed decisions
 
-## Dependency Graph
+- React + TypeScript + Vite; no Next.js, backend, accounts, or remote runtime data.
+- Zustand `persist` stores only phase settings, cycle count, and language with explicit `partialize` and migration.
+- Inhale/exhale: `1–20` seconds; holds: `0–20` seconds; cycles: `1–25`.
+- Browser locale chooses the initial language: `uk` → Ukrainian, everything else → English.
+- The session is driven by elapsed time, ends only after a full cycle, and has no pause, exit, or total-time control.
+- Installation UI is browser/system-owned. Breathing renders no custom install banner, help screen, or fallback instructions.
+- Screen Wake Lock is best-effort and silent on unsupported or failed requests.
+- The visual renderer is selected by a throwaway CSS-first motion spike; Canvas 2D is compared only if CSS is too curtain-like, and Paper.js is not a default dependency.
+
+## Dependency graph
 
 ```text
-Проєктна основа
-    │
-    └── Модель циклу та часу
-            │
-            ├── Стандартна сесія від старту до завершення
-            │       │
-            │       └── Анімація припливу та переходи фаз
-            │
-            └── Налаштування фаз і кількості циклів
-                    │
-                    └── Збереження налаштувань
-
-Повний користувацький потік
-    │
-    ├── Дві мови та адаптивність
-    ├── PWA-іконка, встановлення та офлайн-кеш
-    └── Перевірка, публікація й мінімальна аналітика
+Task 1: foundation
+  ├── Task 2: session-engine ──┐
+  └── Task 3: localization ───┼── Task 4: user-settings
+                              └── Task 5: meditation-session
+                                      ├── Task 6: tide motion spike
+                                      └── Task 7: production visual
+                                              └── Task 8: installable PWA
+                                                      └── Task 9: release checks
 ```
 
-## Task List
+## Phases and checkpoints
 
-### Phase 1: Foundation
+### Phase 1 — Foundation and pure contracts
 
-- [ ] Task 1: Створити проєктну основу на React, TypeScript і Vite.
-- [ ] Task 2: Реалізувати та перевірити чисту модель дихального циклу.
+1. Scaffold React, TypeScript, Vite, linting, type-checking, Vitest, Playwright, and the required `yarn` scripts.
+2. Implement the pure `session-engine` with phase boundaries, countdowns, cycle math, completion, and delayed-callback catch-up.
+3. Implement typed Ukrainian and English dictionaries with browser-locale initialization and key-parity checks.
 
-### Checkpoint: Foundation
+**Checkpoint:** the project builds, all pure tests pass, and no timing or translation contract depends on React, storage, or animation.
 
-- [ ] Проєкт запускається, перевірки та збірка мають зафіксовані команди.
-- [ ] Модель точно розраховує фази, цикли та загальну тривалість.
+### Phase 2 — Settings and complete user flow
 
-### Phase 2: Core Flow
+4. Add the validated Zustand settings store, persisted schema migration, cycle-duration summary, and settings UI.
+5. Build start, preparation, active, and completion states around an immutable configuration snapshot; use a placeholder visual until the motion spike is selected.
 
-- [ ] Task 3: Зібрати стандартну сесію `4–4–4–4` від старту до завершення.
-- [ ] Task 4: Додати налаштування фаз, слайдер циклів і локальне збереження.
+**Checkpoint:** a shortened browser test can start, cross every phase, complete, repeat, and abandon without restoring partial runtime state.
 
-### Checkpoint: Core Flow
+### Phase 3 — Tide visual and responsive experience
 
-- [ ] На телефоні можна пройти стандартну сесію без помилок.
-- [ ] Змінена конфігурація завжди завершується після повного циклу.
+6. Compare a one-cycle CSS composition with Canvas 2D only if needed; record the decision using phase mapping, hold behavior, reduced motion, and mobile performance.
+7. Integrate the chosen renderer, morning-mist tokens, readable overlays, responsive layout, and calm completion state without moving timing into the view.
 
-### Phase 3: Visual Experience
+**Checkpoint:** a full `04:00` session remains understandable and smooth on representative mobile and desktop viewports.
 
-- [ ] Task 5: Обрати рендеринг через motion-прототип і реалізувати «живий приплив».
-- [ ] Task 6: Додати м’які переходи фаз, фінальний стан і візуальне полірування.
+### Phase 4 — Installable offline product
 
-### Checkpoint: Visual Experience
+8. Add the manifest, original tide-mark icons, standalone metadata, service-worker caching, safe update behavior, and best-effort wake lock. Verify native install affordances without adding app-owned install UI.
+9. Run the full browser/device matrix, publish the static app, and optionally add only anonymous open/start/complete analytics after a separate decision.
 
-- [ ] Напрям руху зрозумілий без пояснень.
-- [ ] Відлік і назви фаз залишаються читабельними на всіх станах припливу.
-- [ ] Рух не смикається на межах фаз.
+**Checkpoint:** the published app installs where supported, opens offline after one online load, completes a session, and does not interrupt an active session during an update.
 
-### Phase 4: Product Completion
+## Risks and mitigations
 
-- [ ] Task 7: Додати українську, англійську й адаптивну поведінку.
-- [ ] Task 8: Перетворити готовий потік на встановлювану офлайн-PWA.
+| Risk | Mitigation |
+|---|---|
+| Visual tide is decorative but unclear | Prototype phase direction and countdown before polishing. |
+| Frame drops or hidden tabs desynchronise the guide | Derive every state from elapsed time, never frame count. |
+| Device sleeps during a session | Request Screen Wake Lock when supported; continue silently if it fails. |
+| Service-worker update interrupts a session | Activate updates only outside an active session or on the next launch. |
+| Install behavior differs by platform | Test browser/system affordances on supported Android and iOS devices; ship no custom banner. |
+| Ukrainian text overflows | Test the longest phase label at narrow mobile widths and keep overlays independent. |
 
-### Checkpoint: Installable App
+## Parallel work
 
-- [ ] Breathing встановлюється з коректною власною іконкою.
-- [ ] Встановлена апка відкривається окремим вікном і проходить повну сесію без мережі.
-- [ ] Локальні налаштування зберігаються між повторними запусками встановленої апки на одному пристрої.
-
-### Phase 5: Release
-
-- [ ] Task 9: Провести браузерну перевірку, опублікувати апку й підключити мінімальні події аналітики.
-
-### Checkpoint: Complete
-
-- [ ] Усі автоматизовані перевірки проходять.
-- [ ] Апка працює на мобільному й десктопному розмірі екрана.
-- [ ] Встановлення й офлайн-запуск перевірені на підтримуваних мобільних платформах.
-- [ ] Старт, завершення та повторна сесія працюють наскрізно.
-- [ ] Проєкт готовий до людського перегляду перед реалізацією відкладених функцій.
-
-## Risks and Mitigations
-
-| Ризик | Вплив | Пом’якшення |
-|---|---|---|
-| Анімація виглядає красиво, але нечітко передає фазу | Високий | Спочатку перевірити просту версію руху без декоративних ефектів |
-| Відлік і рух розходяться після затримки вкладки або просідання кадрів | Високий | Рахувати стан від фактичного часу, а не від кількості кадрів |
-| Телефон затемнює або блокує екран під час сесії | Середній | Перевірити реальні мобільні браузери на ранньому checkpoint |
-| Кешована PWA продовжує відкривати стару версію | Середній | Зафіксувати передбачувану стратегію оновлення й не активувати оновлення посеред сесії |
-| Встановлення відрізняється між iPhone та Android | Середній | Перевірити обидва сценарії й дати коротку платформну підказку без нав’язливого банера |
-| Світла палітра має недостатній контраст на частині екранів | Середній | Перевірити всі фази на кількох дисплеях і зафіксувати контрастні кольори тексту |
-| Іконка втрачає форму в малому розмірі або під системною маскою | Низький | Використати один простий знак, без тексту й тонких деталей; перевірити всі потрібні розміри |
-| Дві мови ламають компактні композиції | Низький | Проєктувати компонування під довший український текст «Затримка дихання» |
-
-## Open Questions Before Implementation
-
-- Які межі секунд і циклів мають бути в налаштуваннях?
-- Чи дозволяти нульову тривалість затримок?
-- Чи потрібно окремо запобігати автоматичному блокуванню екрана?
-- Де показувати одноразову підказку про встановлення на iPhone та Android?
-- Чи достатньо CSS-композиції для припливу, чи motion-прототип доведе потребу в Canvas/Paper.js?
-
-## Parallelization
-
-Роботу краще виконувати послідовно до готовності стандартної сесії. Після Task 4 можна окремо працювати над анімацією, локалізацією та ескізом іконки. PWA-кешування додається після стабілізації повного потоку, щоб одразу кешувати правильний набір ресурсів. Фінальна браузерна перевірка відбувається після встановлення PWA.
+After Task 1, Tasks 2 and 3 can proceed in parallel. The motion spike may begin once the session state contract is stable, but production visual integration waits for Task 5. PWA packaging and release checks wait for the complete flow and chosen renderer. No post-MVP feature (sound, vibration, presets, history, accounts, or analytics fields) enters these phases without a new decision.

@@ -1,270 +1,178 @@
-# Breathing Task List
+# Breathing Task Checklist
 
-## Task 1: Створити основу на React, TypeScript і Vite
+This checklist follows the approved [`SPEC.md`](../SPEC.md) and [`tasks/plan.md`](plan.md). Complete tasks in order unless a dependency explicitly allows parallel work.
 
-**Description:** Ініціалізувати клієнтський застосунок на React, TypeScript і Vite, додати Zustand та PWA-інтеграцію й зафіксувати команди запуску, перевірки та production-збірки. Серверна частина не додається.
+## Phase 1 — Foundation and pure contracts
+
+### Task 1: Scaffold the application
+
+**Description:** Create the React + TypeScript + Vite app and establish the agreed quality gates without adding a backend.
 
 **Acceptance criteria:**
 
-- [ ] Апка відкривається локально на мобільному й десктопному розмірі.
-- [ ] Налаштовані автоматичні перевірки та production-збірка.
-- [ ] У README записані точні команди й є посилання на ADR-001.
+- [ ] `yarn dev`, `yarn typecheck`, `yarn lint`, `yarn test`, `yarn build`, and `yarn test:e2e` exist and run.
+- [ ] The start route renders at mobile and desktop viewport sizes.
+- [ ] Versions and the stack decision are recorded in `package.json`, the lockfile, and the ADR.
 
-**Verification:**
-
-- [ ] Запустити зафіксовану тестову команду.
-- [ ] Запустити зафіксовану команду production-збірки.
-- [ ] Відкрити стартову сторінку в реальному браузері.
+**Verification:** Run all six scripts; open the start route in a real browser.
 
 **Dependencies:** None
+**Likely files:** `package.json`, `src/`, `e2e/`, `README.md`
+**Scope:** Medium
 
-**Files likely touched:**
+### Task 2: Implement `session-engine`
 
-- `package.json`
-- `src/`
-- `tests/`
-- `README.md`
-
-**Estimated scope:** Medium
-
-## Task 2: Реалізувати модель дихальної сесії
-
-**Description:** Створити незалежну від інтерфейсу модель, яка визначає поточну фазу, залишок секунд, номер циклу та завершення сесії на основі фактичного часу.
+**Description:** Build a pure elapsed-time model for `inhale → hold-after-inhale → exhale → hold-after-exhale`.
 
 **Acceptance criteria:**
 
-- [ ] `4–4–4–4` і 15 циклів дають рівно `04:00`.
-- [ ] Кожна фаза починається та завершується в правильний момент.
-- [ ] Сесія завжди завершується на межі повного циклу.
+- [ ] `4–4–4–4` produces a 16-second cycle and 240 seconds for 15 cycles.
+- [ ] Exact boundaries return the next phase with a fresh `4 → 3 → 2 → 1` countdown.
+- [ ] Completion occurs only at the total duration; delayed callbacks catch up correctly.
 
-**Verification:**
-
-- [ ] Автоматичні тести перевіряють усі межі фаз і циклів.
-- [ ] Тести перевіряють відновлення правильного стану після пропуску кадрів.
-- [ ] Загальна тестова команда проходить.
+**Verification:** Unit-test time zero, one millisecond before and at every boundary, cycle transitions, completion, and representative skipped timestamps.
 
 **Dependencies:** Task 1
+**Likely files:** `src/domain/session-engine.*` and tests
+**Scope:** Small
 
-**Files likely touched:**
+### Task 3: Add typed localization
 
-- `src/domain/breathing-session.*`
-- `src/domain/breathing-session.test.*`
-
-**Estimated scope:** Small
-
-## Task 3: Зібрати стандартну сесію наскрізно
-
-**Description:** Додати головний екран із готовою конфігурацією, кнопку «Почати», підготовку `3 → 2 → 1`, тимчасове відображення фаз і фінальний екран.
+**Description:** Add parity-checked Ukrainian and English dictionaries for every Breathing-owned label.
 
 **Acceptance criteria:**
 
-- [ ] Сесію можна запустити одним натисканням без налаштувань.
-- [ ] Назви й відлік фаз відповідають моделі часу.
-- [ ] Після 15 циклів відкривається фінальний стан із «Ще раз».
+- [ ] Both dictionaries have identical keys and concise phase labels.
+- [ ] Browser locale maps `uk` to Ukrainian and every other locale to English.
+- [ ] No component contains inline translated strings; missing keys fail in development.
 
-**Verification:**
+**Verification:** Test key parity and render start, settings, active, and completion states in both languages.
 
-- [ ] Компонентні тести перевіряють старт, зміну фаз і завершення.
-- [ ] Production-збірка проходить.
-- [ ] Повний стандартний потік вручну перевірений у браузері.
+**Dependencies:** Task 1
+**Likely files:** `src/i18n/` and tests
+**Scope:** Small
 
-**Dependencies:** Task 2
+### Checkpoint: Foundation
 
-**Files likely touched:**
+- [ ] All six scripts pass.
+- [ ] The timing model and dictionaries are independent of React, storage, and animation.
+- [ ] Human review confirms the contracts before UI behavior is built.
 
-- `src/app.*`
-- `src/ui/start-screen.*`
-- `src/ui/session-screen.*`
-- `src/ui/completion-screen.*`
+## Phase 2 — Settings and complete flow
 
-**Estimated scope:** Medium
+### Task 4: Implement `user-settings`
 
-## Task 4: Додати налаштування повних циклів
-
-**Description:** Додати Zustand-store з налаштуваннями чотирьох фаз, слайдером кількості циклів і мовою. Через `persist` та `partialize` зберігати в `localStorage` лише стабільні налаштування, а активну сесію залишити тимчасовою.
+**Description:** Add validated phase controls, the integer cycle slider, language selection, and narrow Zustand persistence.
 
 **Acceptance criteria:**
 
-- [ ] Поруч зі слайдером завжди показані кількість циклів і точний час.
-- [ ] Зміна будь-якої фази негайно перераховує час.
-- [ ] Після повторного відкриття відновлюються налаштування й мова, але не активна сесія, історія або персональна інформація.
+- [ ] Inhale/exhale accept `1–20`; holds accept `0–20`; cycles accept `1–25`.
+- [ ] The default is `4–4–4–4`, 15 cycles, shown as `15 cycles · 04:00` (localized).
+- [ ] `persist` saves only settings and language with `partialize`, a schema version, and migration; runtime state is never saved.
 
-**Verification:**
+**Verification:** Test bounds, duration math, malformed storage, migration, reset-to-default, and refresh behavior.
 
-- [ ] Тести перевіряють розрахунок часу для кількох конфігурацій.
-- [ ] Тести перевіряють читання й запис налаштувань.
-- [ ] Налаштування вручну перевірені на вузькому екрані.
+**Dependencies:** Tasks 2 and 3
+**Likely files:** `src/domain/breathing-config.*`, `src/store/`, `src/ui/settings.*`
+**Scope:** Medium
 
-**Dependencies:** Task 2, Task 3
+### Task 5: Build `meditation-session`
 
-**Files likely touched:**
-
-- `src/domain/breathing-config.*`
-- `src/store/settings-store.*`
-- `src/ui/settings.*`
-- відповідні тести
-
-**Estimated scope:** Medium
-
-## Checkpoint: Core Flow
-
-- [ ] Усі тести проходять.
-- [ ] Production-збірка проходить.
-- [ ] Стандартна й змінена сесії працюють наскрізно.
-- [ ] Людина підтвердила логіку до переходу до декоративної анімації.
-
-## Task 5: Обрати рендеринг і реалізувати «живий приплив»
-
-**Description:** Спочатку зібрати один 16-секундний цикл припливу з композитних CSS-шарів. Якщо він не дає достатньо органічної межі або стабільності, зробити обмежений Canvas-прототип і лише тоді оцінити Paper.js. Обраний варіант під’єднати до нормалізованого прогресу фази.
+**Description:** Connect the start, preparation, active, and completion states to an immutable configuration snapshot.
 
 **Acceptance criteria:**
 
-- [ ] Приплив піднімається на вдиху й опускається на видиху.
-- [ ] На затримках рівень стабільний, але фон не виглядає замороженим.
-- [ ] Обраний найпростіший рендеринг, який забезпечує потрібну якість, а текст і цифра читабельні в кожному стані.
+- [ ] One tap starts the default session after `3 → 2 → 1` preparation.
+- [ ] Active state shows only phase label, phase countdown, and visual placeholder—no total timer, pause, or exit controls.
+- [ ] Completion offers «Ще раз» using the saved configuration; reload or navigation abandons the session.
 
-**Verification:**
+**Verification:** Component tests cover start, phase transitions, completion, repeat, language changes, and snapshot isolation; run a shortened browser flow.
 
-- [ ] Візуальні стани перевірені на початку, середині й кінці кожної фази.
-- [ ] Анімація перевірена на мобільному й десктопному viewport.
-- [ ] Рішення про рендеринг зафіксоване; production-збірка проходить.
+**Dependencies:** Tasks 2–4
+**Likely files:** `src/ui/`, `src/app.*`, session-flow tests
+**Scope:** Medium
 
-**Dependencies:** Task 3
+### Checkpoint: Core flow
 
-**Files likely touched:**
+- [ ] Standard and changed configurations start and finish on full-cycle boundaries.
+- [ ] No runtime session state survives reload.
+- [ ] Timing remains correct with a placeholder visual.
 
-- `src/ui/tide-visual.*`
-- `src/styles/tide.*`
-- `src/styles/tokens.*`
-- відповідні тести
+## Phase 3 — Tide visual and responsive experience
 
-**Estimated scope:** Medium
+### Task 6: Run the motion spike
 
-## Task 6: Відполірувати переходи та завершення
-
-**Description:** Додати сповільнення руху перед затримкою, м’яку зміну тексту й цифри без зміни фактичної тривалості фаз, а також фінальне заспокоєння композиції.
+**Description:** Compare a throwaway one-cycle CSS tide with Canvas 2D only if CSS looks like a flat curtain; consider Paper.js only with evidence.
 
 **Acceptance criteria:**
 
-- [ ] На межах фаз немає різких візуальних стрибків.
-- [ ] Декоративні переходи не змінюють таймінг моделі.
-- [ ] Після завершення анімація переходить у стабільний фінальний стан.
+- [ ] Inhale rises, exhale recedes, and both holds remain stable with subtle texture motion.
+- [ ] Phase progress maps correctly at `0`, midpoint, and `1`; reduced motion keeps phase information.
+- [ ] Renderer choice is recorded with mobile/desktop performance and complexity evidence.
 
-**Verification:**
+**Verification:** Inspect representative visual states and measure smoothness on target viewport sizes.
 
-- [ ] Перевірити кілька послідовних циклів у реальному часі.
-- [ ] Порівняти візуальні переходи з логами часових меж у тестовому режимі.
-- [ ] Усі тести та збірка проходять.
+**Dependencies:** Tasks 2 and 5
+**Likely files:** throwaway prototype under `src/visuals/` or `prototype/` plus decision note
+**Scope:** Medium
 
-**Dependencies:** Task 2, Task 5
+### Task 7: Integrate and polish `tide-visual`
 
-**Files likely touched:**
-
-- `src/ui/tide-visual.*`
-- `src/ui/phase-label.*`
-- `src/ui/completion-screen.*`
-
-**Estimated scope:** Small
-
-## Checkpoint: Visual Experience
-
-- [ ] Повна чотирихвилинна сесія пройдена на телефоні.
-- [ ] Рух зрозумілий без текстового пояснення.
-- [ ] Палітра перевірена за денного й вечірнього освітлення.
-- [ ] Відлік не відчувається надто механічним.
-
-## Task 7: Додати локалізацію й адаптивність
-
-**Description:** Винести всі тексти в український та англійський словники й перевірити компонування на мобільних і десктопних розмірах.
+**Description:** Integrate the selected renderer with morning-mist tokens, responsive composition, readable overlays, reduced motion, and completion state.
 
 **Acceptance criteria:**
 
-- [ ] Усі видимі тексти доступні українською й англійською.
-- [ ] «Затримка дихання» не ламає композицію на вузькому екрані.
-- [ ] Вибрана мова зберігається на пристрої.
+- [ ] Visual direction is understandable without explanation and never owns timing.
+- [ ] «Затримка дихання» and countdown remain readable at mobile and desktop widths.
+- [ ] Decorative transitions do not change phase duration or create boundary jumps.
 
-**Verification:**
+**Verification:** Run visual checks at each phase midpoint and boundary, across both languages, with reduced motion enabled; run tests and build.
 
-- [ ] Автоматична перевірка не знаходить текстів поза словниками.
-- [ ] Обидві мови вручну перевірені на вузькому й широкому екрані.
-- [ ] Усі тести та збірка проходять.
+**Dependencies:** Task 6
+**Likely files:** `src/visuals/`, `src/ui/`, `src/styles/` and tests
+**Scope:** Medium
 
-**Dependencies:** Task 3, Task 4, Task 6
+### Checkpoint: Visual experience
 
-**Files likely touched:**
+- [ ] A full `04:00` session is calm, legible, and directionally obvious on phone and desktop.
+- [ ] The animation remains synchronized after delayed frames or hidden-tab recovery.
 
-- `src/i18n/uk.*`
-- `src/i18n/en.*`
-- `src/i18n/index.*`
-- адаптивні стилі та тести
+## Phase 4 — Installable offline product and release
 
-**Estimated scope:** Medium
+### Task 8: Package the installable PWA
 
-## Task 8: Перетворити застосунок на встановлювану PWA
-
-**Description:** Додати manifest, власну мінімалістичну іконку з мотивом припливу, standalone-режим, встановлення на домашній екран і кешування всіх ресурсів базової сесії для роботи без мережі.
+**Description:** Add manifest metadata, original tide-mark icons, standalone display, service-worker caching, safe update behavior, and best-effort Screen Wake Lock.
 
 **Acceptance criteria:**
 
-- [ ] Встановлена Breathing має коректну назву, власну іконку та відкривається без інтерфейсу браузера.
-- [ ] Після першого успішного завантаження стандартна й змінена сесії повністю працюють у режимі без мережі.
-- [ ] Для iPhone та Android доступна коротка ненав’язлива підказка про встановлення.
+- [ ] Supported platforms expose their own native install affordance and the installed app opens standalone.
+- [ ] After one successful online load, a full shortened session works offline.
+- [ ] Breathing renders no custom install banner, help screen, or fallback instructions; failed wake-lock requests never block a session.
 
-**Verification:**
+**Verification:** Inspect manifest and service worker; install on supported Android and iOS devices where available; run airplane-mode session; test an update during an active session.
 
-- [ ] Перевірити manifest, іконки та installability засобами браузера.
-- [ ] Встановити апку на мобільний пристрій і пройти сесію в режимі польоту.
-- [ ] Оновити версію та перевірити, що активна сесія не переривається через оновлення кешу.
+**Dependencies:** Tasks 5 and 7
+**Likely files:** `public/manifest.webmanifest`, `public/icons/`, `src/pwa/`, Vite PWA config
+**Scope:** Medium
 
-**Dependencies:** Task 4, Task 6, Task 7
+### Task 9: Verify and publish
 
-**Files likely touched:**
-
-- `public/manifest.webmanifest`
-- `public/icons/`
-- `public/apple-touch-icon.png`
-- `src/pwa.*`
-- конфігурація service worker
-
-**Estimated scope:** Medium
-
-## Checkpoint: Installable App
-
-- [ ] PWA встановлюється з домашнього екрана на підтримуваних платформах.
-- [ ] Встановлена апка відкривається в standalone-режимі.
-- [ ] Повна сесія й локальні налаштування працюють без інтернету.
-- [ ] Іконка залишається впізнаваною під різними системними масками.
-
-## Task 9: Перевірити й опублікувати
-
-**Description:** Провести наскрізну браузерну перевірку, усунути критичні проблеми, опублікувати статичну апку та підключити лише події відкриття, початку й завершення сесії.
+**Description:** Run the browser/device matrix, fix release blockers, publish the static app, and consider anonymous analytics only as a separately approved follow-up.
 
 **Acceptance criteria:**
 
-- [ ] Опублікована версія відкривається на телефоні й десктопі, встановлюється та працює без інтернету.
-- [ ] Стандартна сесія проходить без розходження таймера та анімації.
-- [ ] Аналітика не збирає параметри дихання або інші персональні дані.
+- [ ] Published app opens on mobile and desktop, installs where supported, and completes offline after the first online load.
+- [ ] Timer, labels, visual, and completion remain synchronized in the production build.
+- [ ] No breathing settings or personal data are sent; analytics are absent unless explicitly approved.
 
-**Verification:**
-
-- [ ] Усі тести, перевірки стилю та production-збірка проходять.
-- [ ] Наскрізний потік перевірений у підтримуваних браузерах.
-- [ ] Події відкриття, початку й завершення видно в аналітиці.
+**Verification:** Run all scripts, browser scenarios, production smoke checks, and real-device install/offline checks; record the deployed URL and known platform limits.
 
 **Dependencies:** Task 8
+**Likely files:** deployment config, `README.md`, browser tests
+**Scope:** Medium
 
-**Files likely touched:**
+### Checkpoint: Complete
 
-- конфігурація публікації
-- `src/analytics.*`
-- браузерні тести
-- `README.md`
-
-**Estimated scope:** Medium
-
-## Checkpoint: Complete
-
-- [ ] Усі acceptance criteria виконані.
-- [ ] Весь базовий потік перевірений на реальному телефоні.
-- [ ] План і результат переглянуті людиною.
-- [ ] Відкладені функції не проникли в MVP.
+- [ ] All acceptance criteria are checked.
+- [ ] The published PWA is usable without network after its first successful load.
+- [ ] Deferred features (sound, vibration, presets, history, accounts, medical claims) are not in the MVP.
