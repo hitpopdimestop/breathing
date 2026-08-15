@@ -97,12 +97,12 @@ export function SettingsPanel({
 
       <label className="range-field" htmlFor="cycles">
         <span className="range-heading">
-          <span>{translate('cycles')}</span>
+          <span>{translate('cyclesLabel')}</span>
           <span className="range-value">{config.cycles}</span>
         </span>
         <input
           id="cycles"
-          aria-label={translate('cycles')}
+          aria-label={translate('cyclesLabel')}
           type="range"
           min="1"
           max="50"

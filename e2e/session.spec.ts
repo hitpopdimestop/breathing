@@ -11,7 +11,7 @@ test('returns to the start screen after a shortened session completes', async ({
   await page.getByRole('slider', { name: 'Пауза' }).nth(0).fill('0')
   await page.getByRole('slider', { name: 'Видих' }).fill('1')
   await page.getByRole('slider', { name: 'Пауза' }).nth(1).fill('0')
-  await page.getByRole('slider', { name: 'циклів' }).fill('1')
+  await page.getByRole('slider', { name: 'Циклів' }).fill('1')
   await page.getByRole('button', { name: 'Закрити' }).click()
 
   await page.getByRole('button', { name: 'Почати' }).click()
