@@ -8,7 +8,7 @@ Provide a pure, deterministic model of a breathing session. Given a configuratio
 
 The phase order is `inhale → hold-after-inhale → exhale → hold-after-exhale`. A cycle duration is the sum of those four phase durations. A session duration is one cycle multiplied by the selected cycle count.
 
-At an exact phase boundary, the next phase owns the timestamp. At the exact total duration, the session is complete. The model uses elapsed time rather than animation frames, React renders, or wall-clock display updates. Inhale and exhale durations are 1–20 seconds; hold durations may be 0–20 seconds; cycles are 1–25.
+At an exact phase boundary, the next phase owns the timestamp. At the exact total duration, the session is complete. The model uses elapsed time rather than animation frames, React renders, or wall-clock display updates. Inhale and exhale durations are 1–20 seconds; hold durations may be 0–20 seconds; cycles are 1–50.
 
 ## Acceptance Criteria
 

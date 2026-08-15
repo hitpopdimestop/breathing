@@ -80,7 +80,6 @@
 .welcome {
   width: min(100%, 40rem);
   margin: auto 0;
-  transform: translateY(clamp(-5rem, -8.5vh, -3rem));
   padding: clamp(2.25rem, 10vw, 5rem) clamp(1.5rem, 8vw, 4rem);
   border: 1px solid rgb(238 242 213 / 38%);
   border-radius: 2rem;
@@ -153,6 +152,11 @@ h1 {
   background: rgb(238 242 213 / 18%);
   box-shadow: 0 1.5rem 4rem rgb(48 64 93 / 14%);
   backdrop-filter: blur(12px);
+}
+
+.welcome,
+.settings-panel {
+  transform: translateY(clamp(-5rem, -8.5vh, -3rem));
 }
 
 .settings-heading,
@@ -309,6 +313,12 @@ input[type='range'] {
 
   .session-content {
     padding: 2rem;
+  }
+}
+
+@media (max-width: 47.99rem) {
+  .settings-panel {
+    transform: translateY(clamp(-3.5rem, -6.2vh, -2rem));
   }
 }
 

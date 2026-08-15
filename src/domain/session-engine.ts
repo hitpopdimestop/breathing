@@ -59,7 +59,7 @@ export function assertValidBreathConfig(config: BreathConfig): void {
     (seconds, index) =>
       Number.isInteger(seconds) && seconds >= (index === 0 || index === 2 ? 1 : 0) && seconds <= 20,
   )
-  const validCycles = Number.isInteger(config.cycles) && config.cycles >= 1 && config.cycles <= 25
+  const validCycles = Number.isInteger(config.cycles) && config.cycles >= 1 && config.cycles <= 50
 
   if (!validDurations || !validCycles) {
     throw new Error('Invalid breath configuration')

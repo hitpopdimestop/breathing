@@ -5,6 +5,7 @@ test('edits and persists the breathing settings', async ({ page }) => {
 
   await expect(page.getByText('15 циклів · 04:00')).toBeVisible()
   await page.getByRole('button', { name: 'Налаштування' }).click()
+  await expect(page.getByRole('slider', { name: 'циклів' })).toHaveAttribute('max', '50')
 
   await page.getByRole('slider', { name: 'Вдих' }).fill('6')
   await expect(page.getByText('15 циклів · 04:30')).toBeVisible()

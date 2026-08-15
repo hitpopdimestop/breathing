@@ -8,7 +8,7 @@ Let a person adjust the four phase durations and the number of complete cycles w
 
 The persisted settings are the four phase durations, cycle count, and language. Zustand `persist` uses a stable storage key, an explicit `partialize` selection, and a schema version with migration support. Active phase, countdown, elapsed time, animation progress, and browser/system installation state are never persisted.
 
-The cycle slider changes an integer cycle count from 1 through 25. Inhale and exhale controls accept 1–20 seconds; hold controls accept 0–20 seconds. The UI shows both count and calculated duration, for example `15 cycles · 04:00`. Changing a phase recalculates duration immediately.
+The cycle slider changes an integer cycle count from 1 through 50. Inhale and exhale controls accept 1–20 seconds; hold controls accept 0–20 seconds. The UI shows both count and calculated duration, for example `15 cycles · 04:00`. Changing a phase recalculates duration immediately.
 
 ## Acceptance Criteria
 

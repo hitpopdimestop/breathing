@@ -105,7 +105,7 @@ export function SettingsPanel({
           aria-label={translate('cycles')}
           type="range"
           min="1"
-          max="25"
+          max="50"
           step="1"
           value={config.cycles}
           onChange={(event) => onCyclesChange(Number(event.target.value))}

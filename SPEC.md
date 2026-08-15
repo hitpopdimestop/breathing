@@ -87,7 +87,7 @@ Tests live beside source as `*.test.ts(x)`; Playwright scenarios live in `e2e/*.
 ## Success Criteria
 
 - The default start screen shows `4–4–4–4`, `15 cycles`, and `04:00`.
-- Inhale and exhale values validate from 1 through 20 seconds; hold values validate from 0 through 20 seconds; cycles validate from 1 through 25.
+- Inhale and exhale values validate from 1 through 20 seconds; hold values validate from 0 through 20 seconds; cycles validate from 1 through 50.
 - A complete session runs through 15 cycles with exact phase timing and no session controls.
 - The current phase and `4 → 3 → 2 → 1` countdown remain synchronized with elapsed time.
 - Custom settings change only at full-cycle boundaries and survive app restarts on the same installed device.

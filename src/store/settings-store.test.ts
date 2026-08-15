@@ -54,6 +54,13 @@ describe('settings store validation', () => {
   it('starts with the approved default settings', () => {
     const store = createSettingsStore(createMemoryStorage().storage)
 
+    expect(DEFAULT_BREATH_CONFIG).toEqual({
+      inhaleSeconds: 4,
+      holdAfterInhaleSeconds: 4,
+      exhaleSeconds: 4,
+      holdAfterExhaleSeconds: 4,
+      cycles: 15,
+    })
     expect(store.getState().config).toEqual(DEFAULT_BREATH_CONFIG)
     expect(store.getState().language).toBe('en')
   })
@@ -63,8 +70,16 @@ describe('settings store validation', () => {
 
     expect(() => store.getState().setPhaseDuration('inhaleSeconds', 0)).toThrow()
     expect(() => store.getState().setPhaseDuration('holdAfterInhaleSeconds', 21)).toThrow()
-    expect(() => store.getState().setCycles(26)).toThrow()
+    expect(() => store.getState().setCycles(51)).toThrow()
     expect(store.getState().config).toEqual(DEFAULT_BREATH_CONFIG)
+  })
+
+  it('accepts the maximum cycle count', () => {
+    const store = createSettingsStore(createMemoryStorage().storage)
+
+    store.getState().setCycles(50)
+
+    expect(store.getState().config.cycles).toBe(50)
   })
 
   it('updates phase values, cycles, language, and can reset them', () => {

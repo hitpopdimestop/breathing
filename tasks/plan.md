@@ -10,7 +10,7 @@ Deliver a mobile-first, installable Breathing PWA with a one-tap `4–4–4–4`
 
 - React + TypeScript + Vite; no Next.js, backend, accounts, or remote runtime data.
 - Zustand `persist` stores only phase settings, cycle count, and language with explicit `partialize` and migration.
-- Inhale/exhale: `1–20` seconds; holds: `0–20` seconds; cycles: `1–25`.
+- Inhale/exhale: `1–20` seconds; holds: `0–20` seconds; cycles: `1–50`.
 - Browser locale chooses the initial language: `uk` → Ukrainian, everything else → English.
 - The session is driven by elapsed time, ends only after a full cycle, and has no pause, exit, or total-time control.
 - Installation UI is browser/system-owned. Breathing renders no custom install banner, help screen, or fallback instructions.

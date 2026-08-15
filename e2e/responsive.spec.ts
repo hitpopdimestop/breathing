@@ -54,3 +54,26 @@ test('keeps the active tide full-screen and content centered', async ({ page }) 
     expect(metrics.content?.right).toBeLessThanOrEqual(metrics.innerWidth)
   }
 })
+
+test('keeps the settings panel aligned with the welcome panel', async ({ page }) => {
+  for (const viewport of [
+    { width: 320, height: 700 },
+    { width: 1440, height: 900 },
+  ]) {
+    await page.setViewportSize(viewport)
+    await page.goto('/')
+    await page.getByRole('button', { name: 'Налаштування' }).click()
+
+    const metrics = await page.evaluate(() => {
+      const panel = document.querySelector('.settings-panel')?.getBoundingClientRect()
+
+      return {
+        innerHeight: window.innerHeight,
+        panel,
+      }
+    })
+
+    const panelCenter = (metrics.panel?.top ?? 0) + (metrics.panel?.height ?? 0) / 2
+    expect(Math.abs(panelCenter - metrics.innerHeight / 2)).toBeLessThan(12)
+  }
+})
