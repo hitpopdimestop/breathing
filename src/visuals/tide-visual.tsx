@@ -1,7 +1,7 @@
 import type { CSSProperties } from 'react'
 
 import type { ActiveSessionState } from '../domain/session-engine'
-import { getTideVisualState } from './tide-visual-state'
+import { getTideOffsetPercent, getTideVisualState } from './tide-visual-state'
 
 type TideVisualProps = Readonly<{
   state: ActiveSessionState
@@ -10,7 +10,7 @@ type TideVisualProps = Readonly<{
 export function TideVisual({ state }: TideVisualProps) {
   const visualState = getTideVisualState(state.phase, state.phaseProgress)
   const style = {
-    '--tide-offset': `${(1 - visualState.level) * 100}%`,
+    '--tide-offset': `${getTideOffsetPercent(visualState.level)}%`,
   } as CSSProperties
 
   return (
@@ -33,7 +33,7 @@ export function TideVisual({ state }: TideVisualProps) {
         </defs>
         <path
           className="tide-wave"
-          d="M0 12 C10 0 22 0 34 12 C46 24 57 24 69 12 C81 0 91 0 100 12 L100 100 L0 100 Z"
+          d="M0 -4 Q17 -10 34 -4 Q51 0 69 -4 Q85 -10 100 -4 L100 100 L0 100 Z"
           fill="url(#tide-gradient)"
         />
       </svg>

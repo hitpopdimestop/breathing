@@ -14,7 +14,11 @@ The active session needs a calm full-screen tide whose level follows the pure se
 
 ## Decision
 
-Use a CSS composition for the MVP tide. The pure `tide-visual-state` mapping converts phase progress into a low level (`0.22`), high level (`0.76`), and one of four motion states. The React visual passes the level through a CSS custom property; CSS handles the soft boundary, gradient, texture drift, and reduced-motion fallback.
+Use a CSS composition for the MVP tide. The pure `tide-visual-state` mapping converts phase progress into a level from `0` to `1` and one of four motion states. The React visual passes the level through a CSS custom property; CSS handles the boundary, gradient, and reduced-motion fallback.
+
+## Full-screen geometry invariant
+
+The tide must be completely absent at the low extreme and cover the entire viewport at the high extreme. The SVG boundary uses only a subtle bend and stays above the `viewBox`; the renderer maps the low level to a `112%` vertical offset and the high level to `0%`. This prevents a visible strip at either edge while keeping the wave visible between extremes. The offset mapping and path geometry are covered by unit and browser regression tests.
 
 ## Alternatives Considered
 

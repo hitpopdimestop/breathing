@@ -48,3 +48,5 @@ Use Conventional Commits such as `feat: add breathing timeline` or `fix: preserv
 ## Architecture & Safety Boundaries
 
 Follow `docs/decisions/001-web-application-stack.md`. Do not introduce Next.js, a backend, authentication, analytics containing breathing settings, or new dependencies without documenting the rationale. Never commit secrets or environment files.
+
+The tide visual has a strict full-screen invariant: at its low extreme it must be fully offscreen, and at its high extreme it must cover the entire viewport. Keep the wave bend subtle and preserve the offset/path regression tests when changing its geometry.

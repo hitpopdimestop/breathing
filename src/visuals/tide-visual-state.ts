@@ -10,6 +10,9 @@ export type TideVisualState = Readonly<{
   motion: TideMotion
 }>
 
+// The extra 12% clears the subtle wave boundary at both full-screen extremes.
+const TIDE_OFFSET_SCALE_PERCENT = 112
+
 export function getTideVisualState(
   phase: SessionPhase,
   phaseProgress: number,
@@ -26,6 +29,10 @@ export function getTideVisualState(
     case 'hold-after-exhale':
       return { level: LOW_TIDE_LEVEL, motion: 'lower-hold' }
   }
+}
+
+export function getTideOffsetPercent(level: number): number {
+  return (1 - clamp(level)) * TIDE_OFFSET_SCALE_PERCENT
 }
 
 function clamp(value: number): number {

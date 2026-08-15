@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { getTideVisualState } from './tide-visual-state'
+import { getTideOffsetPercent, getTideVisualState } from './tide-visual-state'
 
 describe('tide visual phase mapping', () => {
   it('rises through inhale progress', () => {
@@ -15,6 +15,12 @@ describe('tide visual phase mapping', () => {
     const expectedLevel = progress * progress * (3 - 2 * progress)
 
     expect(getTideVisualState('inhale', progress).level).toBeCloseTo(expectedLevel, 6)
+  })
+
+  it('keeps the fill fully offscreen or fully covering at the tide extremes', () => {
+    expect(getTideOffsetPercent(0)).toBe(112)
+    expect(getTideOffsetPercent(0.5)).toBe(56)
+    expect(getTideOffsetPercent(1)).toBe(0)
   })
 
   it('holds the upper level after inhale', () => {
