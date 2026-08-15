@@ -14,10 +14,10 @@ describe('localization dictionaries', () => {
 
   it('uses the agreed concise phase labels', () => {
     expect(translate('uk', 'inhale')).toBe('Вдих')
-    expect(translate('uk', 'hold')).toBe('Затримка дихання')
+    expect(translate('uk', 'hold')).toBe('Пауза')
     expect(translate('uk', 'exhale')).toBe('Видих')
     expect(translate('en', 'inhale')).toBe('Inhale')
-    expect(translate('en', 'hold')).toBe('Hold')
+    expect(translate('en', 'hold')).toBe('Pause')
     expect(translate('en', 'exhale')).toBe('Exhale')
   })
 

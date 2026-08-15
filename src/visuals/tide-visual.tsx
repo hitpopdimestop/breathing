@@ -33,7 +33,7 @@ export function TideVisual({ state }: TideVisualProps) {
         </defs>
         <path
           className="tide-wave"
-          d="M0 0 C10 -22 22 -22 34 0 C46 -22 57 -22 69 0 C81 -22 91 -22 100 0 L100 100 L0 100 Z"
+          d="M0 12 C10 0 22 0 34 12 C46 24 57 24 69 12 C81 0 91 0 100 12 L100 100 L0 100 Z"
           fill="url(#tide-gradient)"
         />
       </svg>
