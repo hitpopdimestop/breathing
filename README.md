@@ -17,7 +17,7 @@ React, TypeScript, Vite, Zustand, and `vite-plugin-pwa`. The tide renderer will 
 
 ## Project Status
 
-Product planning and architecture are complete; the formal specification is approved, and Task 1 foundation is complete. Core session behavior is the next implementation increment.
+Product planning and architecture are complete; the formal specification is approved, and Tasks 1–2 are complete. Typed localization is the next implementation increment.
 
 ## Documentation
 

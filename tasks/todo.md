@@ -26,9 +26,9 @@ This checklist follows the approved [`SPEC.md`](../SPEC.md) and [`tasks/plan.md`
 
 **Acceptance criteria:**
 
-- [ ] `4–4–4–4` produces a 16-second cycle and 240 seconds for 15 cycles.
-- [ ] Exact boundaries return the next phase with a fresh `4 → 3 → 2 → 1` countdown.
-- [ ] Completion occurs only at the total duration; delayed callbacks catch up correctly.
+- [x] `4–4–4–4` produces a 16-second cycle and 240 seconds for 15 cycles.
+- [x] Exact boundaries return the next phase with a fresh `4 → 3 → 2 → 1` countdown.
+- [x] Completion occurs only at the total duration; delayed callbacks catch up correctly.
 
 **Verification:** Unit-test time zero, one millisecond before and at every boundary, cycle transitions, completion, and representative skipped timestamps.
 
