@@ -404,6 +404,16 @@ input[type='range'] {
 }
 
 @media (max-width: 20rem) {
+  .app-header {
+    margin-bottom: 0;
+  }
+
+  .welcome,
+  .settings-panel {
+    margin: 0.5rem 0 0;
+    transform: none;
+  }
+
   .settings-heading {
     flex-wrap: wrap;
     row-gap: 0.5rem;

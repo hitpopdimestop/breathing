@@ -29,21 +29,28 @@ test('stays within a narrow viewport when mobile page zoom reduces layout width'
   const dimensions = await page.evaluate(() => ({
     innerWidth: window.innerWidth,
     scrollWidth: document.documentElement.scrollWidth,
+    header: document.querySelector('.app-header')?.getBoundingClientRect(),
     welcome: document.querySelector('.welcome')?.getBoundingClientRect(),
   }))
 
   expect(dimensions.scrollWidth).toBeLessThanOrEqual(dimensions.innerWidth)
   expect(dimensions.welcome?.left).toBeGreaterThanOrEqual(0)
   expect(dimensions.welcome?.right).toBeLessThanOrEqual(dimensions.innerWidth)
+  expect(dimensions.welcome?.top).toBeGreaterThanOrEqual((dimensions.header?.bottom ?? 0) + 8)
 
   await page.getByRole('button', { name: 'Налаштування' }).click()
   const settingsDimensions = await page.evaluate(() => ({
     innerWidth: window.innerWidth,
     scrollWidth: document.documentElement.scrollWidth,
+    header: document.querySelector('.app-header')?.getBoundingClientRect(),
+    panel: document.querySelector('.settings-panel')?.getBoundingClientRect(),
     close: document.querySelector('.settings-heading .close-button')?.getBoundingClientRect(),
   }))
 
   expect(settingsDimensions.scrollWidth).toBeLessThanOrEqual(settingsDimensions.innerWidth)
+  expect(settingsDimensions.panel?.top).toBeGreaterThanOrEqual(
+    (settingsDimensions.header?.bottom ?? 0) + 8,
+  )
   expect(settingsDimensions.close?.right).toBeLessThanOrEqual(settingsDimensions.innerWidth)
 })
 
@@ -150,16 +157,22 @@ test('gives mobile controls comfortable touch targets', async ({ page }) => {
 })
 
 test('keeps the settings panel below the mobile toolbar', async ({ page }) => {
-  await page.setViewportSize({ width: 390, height: 844 })
-  await page.goto('/')
-  await page.getByRole('button', { name: 'Налаштування' }).click()
+  for (const viewport of [
+    { width: 280, height: 700 },
+    { width: 320, height: 700 },
+    { width: 390, height: 844 },
+  ]) {
+    await page.setViewportSize(viewport)
+    await page.goto('/')
+    await page.getByRole('button', { name: 'Налаштування' }).click()
 
-  const metrics = await page.evaluate(() => ({
-    header: document.querySelector('.app-header')?.getBoundingClientRect(),
-    panel: document.querySelector('.settings-panel')?.getBoundingClientRect(),
-  }))
+    const metrics = await page.evaluate(() => ({
+      header: document.querySelector('.app-header')?.getBoundingClientRect(),
+      panel: document.querySelector('.settings-panel')?.getBoundingClientRect(),
+    }))
 
-  expect(metrics.panel?.top).toBeGreaterThanOrEqual((metrics.header?.bottom ?? 0) + 4)
+    expect(metrics.panel?.top).toBeGreaterThanOrEqual((metrics.header?.bottom ?? 0) + 4)
+  }
 })
 
 test('keeps the settings panel aligned with the welcome panel', async ({ page }) => {
