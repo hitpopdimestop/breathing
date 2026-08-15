@@ -3,7 +3,6 @@ import { APP_NAME } from '../app-contract'
 export const dictionaries = {
   uk: {
     appName: APP_NAME,
-    pattern: '04–04–04–04',
     intro: 'Спокійний ритм дихання починається з одного натискання.',
     start: 'Почати',
     settings: 'Налаштування',
@@ -21,7 +20,6 @@ export const dictionaries = {
   },
   en: {
     appName: APP_NAME,
-    pattern: '04–04–04–04',
     intro: 'A calm breathing rhythm starts with one tap.',
     start: 'Start',
     settings: 'Settings',

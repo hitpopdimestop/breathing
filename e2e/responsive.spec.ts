@@ -138,3 +138,25 @@ test('keeps welcome and settings panels at one size across languages', async ({ 
     expect(welcomeUkrainian?.height).toBeCloseTo(settings?.height ?? 0)
   }
 })
+
+test('keeps the metadata row and start button stable across languages', async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 700 })
+  await page.goto('/')
+
+  const headingUkrainian = await page.locator('#app-title').boundingBox()
+  const buttonUkrainian = await page.getByRole('button', { name: 'Почати' }).boundingBox()
+  await expect(page.locator('.session-summary')).toHaveText(
+    '04 · 04 · 04 · 04 · 15 циклів · 04:00',
+  )
+
+  await page.getByRole('button', { name: 'English' }).click()
+
+  const headingEnglish = await page.locator('#app-title').boundingBox()
+  const buttonEnglish = await page.getByRole('button', { name: 'Start' }).boundingBox()
+  await expect(page.locator('.session-summary')).toHaveText(
+    '04 · 04 · 04 · 04 · 15 cycles · 04:00',
+  )
+
+  expect(headingUkrainian?.y).toBeCloseTo(headingEnglish?.y ?? 0)
+  expect(buttonUkrainian?.y).toBeCloseTo(buttonEnglish?.y ?? 0)
+})

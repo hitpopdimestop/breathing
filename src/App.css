@@ -94,14 +94,6 @@
   backdrop-filter: blur(12px);
 }
 
-.eyebrow {
-  margin: 0 0 1.5rem;
-  color: #eef2d5;
-  font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 0.22em;
-}
-
 h1 {
   margin: 0;
   font-size: clamp(3rem, 16vw, 5.5rem);
@@ -109,20 +101,31 @@ h1 {
   line-height: 0.95;
 }
 
+.welcome h1 {
+  margin-top: 2.4375rem;
+}
+
 .intro {
   max-width: 22rem;
   margin: 1.5rem auto 2rem;
+  min-height: 4.8rem;
   color: rgb(48 64 93 / 78%);
   font-size: 1rem;
   line-height: 1.6;
 }
 
 .session-summary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
   margin: 1.25rem 0 0;
+  overflow: hidden;
   color: #eef2d5;
-  font-size: 1.05rem;
+  font-size: clamp(0.72rem, 3.4vw, 1.05rem);
   font-weight: 700;
-  letter-spacing: 0.04em;
+  letter-spacing: 0;
+  white-space: nowrap;
 }
 
 .start-button {
