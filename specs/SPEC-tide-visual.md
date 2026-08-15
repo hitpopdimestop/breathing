@@ -28,7 +28,7 @@ Build a throwaway one-cycle CSS prototype and, if needed, a Canvas prototype. Co
 - No literal anatomical lungs, 3D scene, music, or decorative motion that competes with the countdown.
 - Do not add Paper.js or another animation library without a documented prototype result.
 
-## Open Questions
+## Implementation Notes
 
-- Which renderer wins the focused prototype.
-- Whether target mobile browsers provide acceptable best-effort Screen Wake Lock behavior.
+- CSS is the accepted MVP renderer; revisit Canvas 2D only if target-device testing shows a clear quality or performance gap.
+- Target mobile browsers still need best-effort Screen Wake Lock validation.

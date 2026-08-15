@@ -106,9 +106,9 @@ This checklist follows the approved [`SPEC.md`](../SPEC.md) and [`tasks/plan.md`
 
 **Acceptance criteria:**
 
-- [ ] Inhale rises, exhale recedes, and both holds remain stable with subtle texture motion.
-- [ ] Phase progress maps correctly at `0`, midpoint, and `1`; reduced motion keeps phase information.
-- [ ] Renderer choice is recorded with mobile/desktop performance and complexity evidence.
+- [x] Inhale rises, exhale recedes, and both holds remain stable with subtle texture motion.
+- [x] Phase progress maps correctly at `0`, midpoint, and `1`; reduced motion keeps phase information.
+- [x] Renderer choice is recorded with mobile/desktop performance and complexity evidence.
 
 **Verification:** Inspect representative visual states and measure smoothness on target viewport sizes.
 

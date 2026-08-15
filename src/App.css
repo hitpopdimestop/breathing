@@ -240,26 +240,79 @@ input[type='range'] {
   content: '';
 }
 
-.tide-placeholder {
+.tide-visual {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.tide-visual::before {
+  position: absolute;
+  inset: 8% 5% auto;
+  height: 45%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgb(181 225 210 / 28%), transparent 68%);
+  content: '';
+  animation: tide-drift 14s ease-in-out infinite alternate;
+}
+
+.tide-fill {
   position: absolute;
   right: -12%;
-  bottom: -12%;
+  bottom: -1%;
   left: -12%;
-  z-index: -1;
-  height: 26%;
-  border-radius: 52% 48% 0 0 / 22% 18% 0 0;
+  height: var(--tide-level);
+  border-radius: 52% 48% 0 0 / 14% 18% 0 0;
   background: linear-gradient(180deg, #b5e1d2 0%, #eef2d5 100%);
   box-shadow: 0 -1rem 3rem rgb(238 242 213 / 20%);
-  transition: height 700ms ease;
+  transition: height 160ms linear;
 }
 
-.phase-inhale .tide-placeholder,
-.phase-hold-after-inhale .tide-placeholder {
-  height: 72%;
+.tide-fill::before,
+.tide-fill::after {
+  position: absolute;
+  top: -1.25rem;
+  width: 62%;
+  height: 2rem;
+  border-radius: 50%;
+  background: rgb(181 225 210 / 80%);
+  content: '';
 }
 
-.phase-exhale .tide-placeholder {
-  height: 36%;
+.tide-fill::before {
+  left: -4%;
+  transform: rotate(2deg);
+}
+
+.tide-fill::after {
+  right: -4%;
+  transform: rotate(-2deg);
+}
+
+.tide-surface {
+  position: absolute;
+  top: -0.65rem;
+  right: 12%;
+  left: 12%;
+  height: 1rem;
+  border-radius: 50%;
+  background: rgb(238 242 213 / 52%);
+  filter: blur(0.2rem);
+  animation: tide-surface-drift 8s ease-in-out infinite alternate;
+}
+
+.tide-motion-rising .tide-surface {
+  animation-duration: 5s;
+}
+
+.tide-motion-falling .tide-surface {
+  animation-duration: 7s;
+}
+
+.tide-motion-upper-hold .tide-surface,
+.tide-motion-lower-hold .tide-surface {
+  animation-duration: 11s;
 }
 
 .session-label {
@@ -284,7 +337,10 @@ input[type='range'] {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .tide-placeholder {
+  .tide-visual::before,
+  .tide-surface,
+  .tide-fill {
+    animation: none;
     transition: none;
   }
 }
@@ -292,5 +348,25 @@ input[type='range'] {
 @media (prefers-reduced-motion: reduce) {
   .start-button {
     transition: none;
+  }
+}
+
+@keyframes tide-drift {
+  from {
+    transform: translate3d(-2%, 0, 0) scale(0.96);
+  }
+
+  to {
+    transform: translate3d(3%, 2%, 0) scale(1.04);
+  }
+}
+
+@keyframes tide-surface-drift {
+  from {
+    transform: translateX(-3%) rotate(-1deg);
+  }
+
+  to {
+    transform: translateX(3%) rotate(1deg);
   }
 }
