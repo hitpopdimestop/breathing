@@ -40,7 +40,7 @@ test('stays within a narrow viewport when mobile page zoom reduces layout width'
   const settingsDimensions = await page.evaluate(() => ({
     innerWidth: window.innerWidth,
     scrollWidth: document.documentElement.scrollWidth,
-    close: document.querySelector('.settings-heading .text-button')?.getBoundingClientRect(),
+    close: document.querySelector('.settings-heading .close-button')?.getBoundingClientRect(),
   }))
 
   expect(settingsDimensions.scrollWidth).toBeLessThanOrEqual(settingsDimensions.innerWidth)
@@ -135,6 +135,31 @@ test('gives mobile controls comfortable touch targets', async ({ page }) => {
   expect(metrics.settingsButton?.height).toBeGreaterThanOrEqual(44)
   expect(metrics.languageSwitcher?.height).toBeGreaterThanOrEqual(44)
   expect(metrics.languageButtons.every((button) => button.height >= 44)).toBe(true)
+
+  await page.getByRole('button', { name: 'Налаштування' }).click()
+  const settingsMetrics = await page.evaluate(() => ({
+    close: document.querySelector('.close-button')?.getBoundingClientRect(),
+    sliders: [...document.querySelectorAll<HTMLInputElement>('input[type="range"]')].map(
+      (slider) => slider.getBoundingClientRect(),
+    ),
+  }))
+
+  expect(settingsMetrics.close?.width).toBeGreaterThanOrEqual(44)
+  expect(settingsMetrics.close?.height).toBeGreaterThanOrEqual(44)
+  expect(settingsMetrics.sliders.every((slider) => slider.height >= 44)).toBe(true)
+})
+
+test('keeps the settings panel below the mobile toolbar', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 })
+  await page.goto('/')
+  await page.getByRole('button', { name: 'Налаштування' }).click()
+
+  const metrics = await page.evaluate(() => ({
+    header: document.querySelector('.app-header')?.getBoundingClientRect(),
+    panel: document.querySelector('.settings-panel')?.getBoundingClientRect(),
+  }))
+
+  expect(metrics.panel?.top).toBeGreaterThanOrEqual((metrics.header?.bottom ?? 0) + 4)
 })
 
 test('keeps the settings panel aligned with the welcome panel', async ({ page }) => {
@@ -228,6 +253,7 @@ test('keeps the settings control as an outlined white button', async ({ page }) 
   expect(metrics.settingsTransition).toBe('0s')
   expect(hoveredStyles.backgroundColor).toBe(metrics.settingsBackgroundColor)
   expect(hoveredStyles.transform).toBe('none')
+  await expect(settingsButton.locator('svg')).toHaveCount(1)
 })
 
 test('closes settings with Escape or an outside click', async ({ page }) => {

@@ -61,8 +61,15 @@ export function SettingsPanel({
     >
       <div className="settings-heading">
         <h2 id="settings-title">{translate('settings')}</h2>
-        <button className="text-button" type="button" onClick={onClose}>
-          {translate('close')}
+        <button
+          className="close-button"
+          type="button"
+          aria-label={translate('close')}
+          onClick={onClose}
+        >
+          <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
+            <path d="M6 6 18 18M18 6 6 18" />
+          </svg>
         </button>
       </div>
 

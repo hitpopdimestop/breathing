@@ -19,6 +19,8 @@
   width: min(100%, 64rem);
   margin-bottom: auto;
   color: #eef2d5;
+  position: relative;
+  z-index: 2;
 }
 
 .toolbar,
@@ -37,7 +39,7 @@
 
 .language-button,
 .settings-button,
-.text-button {
+.close-button {
   border: 0;
   color: #eef2d5;
   background: transparent;
@@ -68,9 +70,20 @@
   font-size: 1.25rem;
 }
 
+.settings-button svg {
+  display: block;
+  width: 1.2rem;
+  height: 1.2rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.65;
+}
+
 .language-button:focus-visible,
 .settings-button:focus-visible,
-.text-button:focus-visible {
+.close-button:focus-visible {
   outline: 2px solid #eef2d5;
   outline-offset: 3px;
 }
@@ -145,6 +158,8 @@ h1 {
 }
 
 .settings-panel {
+  position: relative;
+  z-index: 1;
   width: min(100%, 40rem);
   margin: auto 0;
   padding: clamp(1.5rem, 6vw, 2.5rem);
@@ -157,8 +172,8 @@ h1 {
 
 .welcome,
 .settings-panel {
-  min-height: 32rem;
-  transform: translateY(clamp(-5rem, -8.5vh, -3rem));
+  min-height: 35.125rem;
+  transform: translateY(clamp(-5rem, -7vh, -3rem));
 }
 
 .settings-heading,
@@ -178,10 +193,25 @@ h1 {
   font-size: 1.5rem;
 }
 
-.text-button {
-  padding: 0.25rem 0;
-  text-decoration: underline;
-  text-underline-offset: 0.2rem;
+.close-button {
+  display: grid;
+  flex: 0 0 2.75rem;
+  width: 2.75rem;
+  height: 2.75rem;
+  place-items: center;
+  padding: 0;
+  border-radius: 50%;
+}
+
+.close-button svg {
+  display: block;
+  width: 1.25rem;
+  height: 1.25rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
 }
 
 .settings-summary {
@@ -213,7 +243,10 @@ h1 {
 
 input[type='range'] {
   width: 100%;
+  height: 2.75rem;
+  margin: -0.5rem 0;
   accent-color: #b5e1d2;
+  cursor: pointer;
 }
 
 .sr-only {
@@ -326,15 +359,22 @@ input[type='range'] {
   .settings-button {
     width: 2.75rem;
     height: 2.75rem;
-    font-size: 1.35rem;
   }
 
   .welcome {
-    transform: translateY(clamp(-2.5rem, -5.5vh, -1.5rem));
+    transform: translateY(clamp(-3rem, -6vh, -1.5rem));
   }
 
   .settings-panel {
-    transform: translateY(clamp(-3.5rem, -6.2vh, -2rem));
+    transform: translateY(clamp(-3rem, -6vh, -1.5rem));
+  }
+
+  .settings-heading {
+    gap: 0.5rem;
+  }
+
+  .settings-heading h2 {
+    font-size: clamp(1.25rem, 6vw, 1.5rem);
   }
 }
 
@@ -369,7 +409,7 @@ input[type='range'] {
     row-gap: 0.5rem;
   }
 
-  .settings-heading .text-button {
+  .settings-heading .close-button {
     margin-left: auto;
   }
 }
