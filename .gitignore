@@ -1,0 +1,19 @@
+# Local agent configuration
+.agents/
+.codex/
+
+# Dependencies and builds
+node_modules/
+dist/
+coverage/
+.vite/
+
+# Test artifacts
+playwright-report/
+test-results/
+
+# Environment and editor files
+.env
+.env.*
+!.env.example
+.DS_Store
