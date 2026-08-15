@@ -100,27 +100,37 @@ test('centers the language controls without a redundant brand label', async ({ p
     await expect(page.locator('.brand')).toHaveCount(0)
     const toolbarCenter = (metrics.toolbar?.left ?? 0) + (metrics.toolbar?.width ?? 0) / 2
     expect(Math.abs(toolbarCenter - metrics.innerWidth / 2)).toBeLessThan(12)
-    expect(metrics.settingsButton?.width).toBeGreaterThanOrEqual(36)
-    expect(metrics.settingsButton?.height).toBeGreaterThanOrEqual(36)
+    expect(metrics.settingsButton?.width).toBeGreaterThanOrEqual(32)
+    expect(metrics.settingsButton?.height).toBeGreaterThanOrEqual(32)
   }
 })
 
 test('keeps the settings control as an outlined white button', async ({ page }) => {
   await page.goto('/')
 
-  const styles = await page.locator('.settings-button').evaluate((element) => {
-    const computed = getComputedStyle(element)
+  const metrics = await page.evaluate(() => {
+    const settingsButton = document.querySelector('.settings-button')?.getBoundingClientRect()
+    const languageSwitcher = document.querySelector('.language-switcher')?.getBoundingClientRect()
+    const settingsStyles = getComputedStyle(document.querySelector('.settings-button')!)
+    const languageStyles = getComputedStyle(document.querySelector('.language-switcher')!)
 
     return {
-      backgroundColor: computed.backgroundColor,
-      color: computed.color,
-      boxShadow: computed.boxShadow,
+      settingsButton,
+      languageSwitcher,
+      settingsBackgroundColor: settingsStyles.backgroundColor,
+      settingsColor: settingsStyles.color,
+      settingsBorderColor: settingsStyles.borderTopColor,
+      settingsBoxShadow: settingsStyles.boxShadow,
+      languageBorderColor: languageStyles.borderTopColor,
     }
   })
 
-  expect(styles.backgroundColor).toBe('rgba(0, 0, 0, 0)')
-  expect(styles.color).toBe('rgb(238, 242, 213)')
-  expect(styles.boxShadow).toBe('none')
+  expect(metrics.settingsButton?.width).toBeCloseTo(metrics.settingsButton?.height ?? 0)
+  expect(metrics.settingsButton?.height).toBeCloseTo(metrics.languageSwitcher?.height ?? 0)
+  expect(metrics.settingsBackgroundColor).toBe('rgba(0, 0, 0, 0)')
+  expect(metrics.settingsColor).toBe('rgb(238, 242, 213)')
+  expect(metrics.settingsBorderColor).toBe(metrics.languageBorderColor)
+  expect(metrics.settingsBoxShadow).toBe('none')
 })
 
 test('closes settings with Escape or an outside click', async ({ page }) => {
