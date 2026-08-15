@@ -7,6 +7,18 @@ test('serves install metadata and completes a shortened session offline', async 
   await page.goto('/')
   await expect(page).toHaveTitle('Breathing')
   await expect(page.locator('link[rel="manifest"]')).toHaveCount(1)
+  await expect(page.locator('link[rel="apple-touch-icon"]')).toHaveAttribute(
+    'href',
+    '/icons/breathing-180.png',
+  )
+  await expect(page.locator('meta[name="apple-mobile-web-app-capable"]')).toHaveAttribute(
+    'content',
+    'yes',
+  )
+  await expect(page.locator('meta[name="apple-mobile-web-app-title"]')).toHaveAttribute(
+    'content',
+    'Breathing',
+  )
 
   await page.getByRole('button', { name: 'Налаштування' }).click()
   await page.getByRole('slider', { name: 'Вдих' }).fill('1')
