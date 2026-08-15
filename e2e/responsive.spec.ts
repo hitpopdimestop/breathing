@@ -54,7 +54,7 @@ test('keeps the active tide full-screen and content centered', async ({ page }) 
     expect(metrics.content?.left).toBeGreaterThanOrEqual(0)
     expect(metrics.content?.right).toBeLessThanOrEqual(metrics.innerWidth)
     expect(metrics.wavePath).toBe(
-      'M0 -4 Q17 -10 34 -4 Q51 0 69 -4 Q85 -10 100 -4 L100 100 L0 100 Z',
+      'M0 -6 Q17 -16 34 -6 Q51 2 69 -6 Q85 -16 100 -6 L100 100 L0 100 Z',
     )
 
     const tideStyles = await page.locator('.tide-fill').evaluate((element) => getComputedStyle(element))
