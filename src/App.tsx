@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState, type MouseEvent } from 'react'
 import { useStore } from 'zustand'
 
 import { createTranslator } from './i18n/localization'
@@ -25,6 +25,35 @@ function App() {
   const t = createTranslator(language)
   const duration = getDurationSummary(config)
 
+  useEffect(() => {
+    if (!settingsOpen) {
+      return undefined
+    }
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        event.preventDefault()
+        setSettingsOpen(false)
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [settingsOpen])
+
+  const handleShellClick = (event: MouseEvent<HTMLElement>) => {
+    if (!settingsOpen || !(event.target instanceof Element)) {
+      return
+    }
+
+    if (event.target.closest('.settings-panel, .settings-button')) {
+      return
+    }
+
+    setSettingsOpen(false)
+  }
+
   if (
     meditationSession.status === 'preparing'
     && meditationSession.preparationSecondsRemaining !== null
@@ -48,9 +77,8 @@ function App() {
   }
 
   return (
-    <main className="shell" lang={language}>
+    <main className="shell" lang={language} onClick={handleShellClick}>
       <header className="app-header">
-        <p className="brand">{t('appName')}</p>
         <div className="toolbar">
           <div className="language-switcher" role="group" aria-label={t('language')}>
             <button

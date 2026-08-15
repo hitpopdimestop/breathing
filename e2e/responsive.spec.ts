@@ -77,3 +77,43 @@ test('keeps the settings panel aligned with the welcome panel', async ({ page })
     expect(Math.abs(panelCenter - metrics.innerHeight / 2)).toBeLessThan(12)
   }
 })
+
+test('centers the language controls without a redundant brand label', async ({ page }) => {
+  for (const viewport of [
+    { width: 320, height: 700 },
+    { width: 1440, height: 900 },
+  ]) {
+    await page.setViewportSize(viewport)
+    await page.goto('/')
+
+    const metrics = await page.evaluate(() => {
+      const toolbar = document.querySelector('.toolbar')?.getBoundingClientRect()
+      const settingsButton = document.querySelector('.settings-button')?.getBoundingClientRect()
+
+      return {
+        innerWidth: window.innerWidth,
+        toolbar,
+        settingsButton,
+      }
+    })
+
+    await expect(page.locator('.brand')).toHaveCount(0)
+    const toolbarCenter = (metrics.toolbar?.left ?? 0) + (metrics.toolbar?.width ?? 0) / 2
+    expect(Math.abs(toolbarCenter - metrics.innerWidth / 2)).toBeLessThan(12)
+    expect(metrics.settingsButton?.width).toBeGreaterThanOrEqual(44)
+    expect(metrics.settingsButton?.height).toBeGreaterThanOrEqual(44)
+  }
+})
+
+test('closes settings with Escape or an outside click', async ({ page }) => {
+  await page.goto('/')
+  await page.getByRole('button', { name: 'Налаштування' }).click()
+  await expect(page.getByRole('dialog')).toBeVisible()
+
+  await page.keyboard.press('Escape')
+  await expect(page.getByRole('dialog')).toBeHidden()
+
+  await page.getByRole('button', { name: 'Налаштування' }).click()
+  await page.locator('main.shell').click({ position: { x: 8, y: 320 } })
+  await expect(page.getByRole('dialog')).toBeHidden()
+})

@@ -15,17 +15,10 @@
 .app-header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   width: min(100%, 64rem);
   margin-bottom: auto;
   color: #eef2d5;
-}
-
-.brand {
-  margin: 0;
-  font-size: 1rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
 }
 
 .toolbar,
@@ -64,10 +57,22 @@
 }
 
 .settings-button {
-  width: 2.25rem;
-  height: 2.25rem;
+  width: 3rem;
+  height: 3rem;
+  border: 1px solid rgb(238 242 213 / 65%);
   border-radius: 50%;
-  font-size: 1.25rem;
+  color: #30405d;
+  background: #b5e1d2;
+  box-shadow: 0 0.6rem 1.2rem rgb(48 64 93 / 16%);
+  font-size: 1.55rem;
+  transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
+}
+
+.settings-button:hover,
+.settings-button[aria-expanded='true'] {
+  transform: translateY(-1px);
+  background: #eef2d5;
+  box-shadow: 0 0.8rem 1.5rem rgb(48 64 93 / 22%);
 }
 
 .language-button:focus-visible,
@@ -301,7 +306,8 @@ input[type='range'] {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .start-button {
+  .start-button,
+  .settings-button {
     transition: none;
   }
 }
