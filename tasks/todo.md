@@ -82,9 +82,9 @@ This checklist follows the approved [`SPEC.md`](../SPEC.md) and [`tasks/plan.md`
 
 **Acceptance criteria:**
 
-- [ ] One tap starts the default session after `3 → 2 → 1` preparation.
-- [ ] Active state shows only phase label, phase countdown, and visual placeholder—no total timer, pause, or exit controls.
-- [ ] Completion offers «Ще раз» using the saved configuration; reload or navigation abandons the session.
+- [x] One tap starts the default session after `3 → 2 → 1` preparation.
+- [x] Active state shows only phase label, phase countdown, and visual placeholder—no total timer, pause, or exit controls.
+- [x] Completion offers «Ще раз» using the saved configuration; reload or navigation abandons the session.
 
 **Verification:** Component tests cover start, phase transitions, completion, repeat, language changes, and snapshot isolation; run a shortened browser flow.
 

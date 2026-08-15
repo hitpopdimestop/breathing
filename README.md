@@ -17,7 +17,7 @@ React, TypeScript, Vite, Zustand, and `vite-plugin-pwa`. The tide renderer will 
 
 ## Project Status
 
-Product planning and architecture are complete; the formal specification is approved, and Tasks 1–4 are complete. The complete meditation session flow is the next implementation increment.
+Product planning and architecture are complete; the formal specification is approved, and Tasks 1–5 are complete. The tide motion prototype is the next implementation increment.
 
 ## Documentation
 

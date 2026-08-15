@@ -5,6 +5,12 @@ import { createTranslator } from './i18n/localization'
 import { getDurationSummary } from './store/settings-store'
 import { settingsStore } from './store/settings-store'
 import { SettingsPanel } from './ui/settings-panel'
+import {
+  ActiveSessionScreen,
+  CompletionScreen,
+  PreparationScreen,
+} from './ui/session-screens'
+import { useMeditationSession } from './ui/use-meditation-session'
 import './App.css'
 
 function App() {
@@ -14,8 +20,39 @@ function App() {
   const setLanguage = useStore(settingsStore, (state) => state.setLanguage)
   const setPhaseDuration = useStore(settingsStore, (state) => state.setPhaseDuration)
   const setCycles = useStore(settingsStore, (state) => state.setCycles)
+  const meditationSession = useMeditationSession()
   const t = createTranslator(language)
   const duration = getDurationSummary(config)
+
+  if (
+    meditationSession.status === 'preparing'
+    && meditationSession.preparationSecondsRemaining !== null
+  ) {
+    return (
+      <div lang={language}>
+        <PreparationScreen
+          translate={t}
+          secondsRemaining={meditationSession.preparationSecondsRemaining}
+        />
+      </div>
+    )
+  }
+
+  if (meditationSession.status === 'active' && meditationSession.activeState !== null) {
+    return (
+      <div lang={language}>
+        <ActiveSessionScreen translate={t} state={meditationSession.activeState} />
+      </div>
+    )
+  }
+
+  if (meditationSession.status === 'complete') {
+    return (
+      <div lang={language}>
+        <CompletionScreen translate={t} onRepeat={() => meditationSession.start(config)} />
+      </div>
+    )
+  }
 
   return (
     <main className="shell" lang={language}>
@@ -71,7 +108,11 @@ function App() {
             {config.cycles} {t('cycles')} <span aria-hidden="true">·</span> {duration.label}
           </p>
           <p className="intro">{t('intro')}</p>
-          <button className="start-button" type="button">
+          <button
+            className="start-button"
+            type="button"
+            onClick={() => meditationSession.start(config)}
+          >
             {t('start')}
           </button>
         </section>

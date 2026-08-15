@@ -218,6 +218,77 @@ input[type='range'] {
   border: 0;
 }
 
+.session-shell {
+  position: relative;
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
+  overflow: hidden;
+  color: #30405d;
+  background:
+    radial-gradient(circle at 18% 16%, rgb(238 242 213 / 42%), transparent 34%),
+    linear-gradient(145deg, #9eadd2 0%, #8998c4 100%);
+  isolation: isolate;
+  text-align: center;
+}
+
+.session-shell::before {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(circle at 72% 30%, rgb(181 225 210 / 26%), transparent 40%);
+  content: '';
+}
+
+.tide-placeholder {
+  position: absolute;
+  right: -12%;
+  bottom: -12%;
+  left: -12%;
+  z-index: -1;
+  height: 26%;
+  border-radius: 52% 48% 0 0 / 22% 18% 0 0;
+  background: linear-gradient(180deg, #b5e1d2 0%, #eef2d5 100%);
+  box-shadow: 0 -1rem 3rem rgb(238 242 213 / 20%);
+  transition: height 700ms ease;
+}
+
+.phase-inhale .tide-placeholder,
+.phase-hold-after-inhale .tide-placeholder {
+  height: 72%;
+}
+
+.phase-exhale .tide-placeholder {
+  height: 36%;
+}
+
+.session-label {
+  margin: 0 0 0.5rem;
+  font-size: clamp(1.25rem, 5vw, 2rem);
+  font-weight: 700;
+}
+
+.session-countdown {
+  margin: 0;
+  color: #eef2d5;
+  font-size: clamp(6rem, 28vw, 12rem);
+  font-variant-numeric: tabular-nums;
+  font-weight: 300;
+  letter-spacing: -0.08em;
+  line-height: 0.9;
+}
+
+.completion-shell {
+  gap: 1.5rem;
+  grid-template-rows: auto auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tide-placeholder {
+    transition: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .start-button {
     transition: none;
