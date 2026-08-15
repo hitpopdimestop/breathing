@@ -66,14 +66,6 @@
   background: transparent;
   box-shadow: none;
   font-size: 1.25rem;
-  transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
-}
-
-.settings-button:hover,
-.settings-button[aria-expanded='true'] {
-  transform: translateY(-1px);
-  background: rgb(238 242 213 / 12%);
-  box-shadow: none;
 }
 
 .language-button:focus-visible,
@@ -311,8 +303,7 @@ input[type='range'] {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .start-button,
-  .settings-button {
+  .start-button {
     transition: none;
   }
 }

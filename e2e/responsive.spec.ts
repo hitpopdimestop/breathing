@@ -108,6 +108,7 @@ test('centers the language controls without a redundant brand label', async ({ p
 test('keeps the settings control as an outlined white button', async ({ page }) => {
   await page.goto('/')
 
+  const settingsButton = page.locator('.settings-button')
   const metrics = await page.evaluate(() => {
     const settingsButton = document.querySelector('.settings-button')?.getBoundingClientRect()
     const languageSwitcher = document.querySelector('.language-switcher')?.getBoundingClientRect()
@@ -121,6 +122,7 @@ test('keeps the settings control as an outlined white button', async ({ page }) 
       settingsColor: settingsStyles.color,
       settingsBorderColor: settingsStyles.borderTopColor,
       settingsBoxShadow: settingsStyles.boxShadow,
+      settingsTransition: settingsStyles.transitionDuration,
       languageBorderColor: languageStyles.borderTopColor,
     }
   })
@@ -131,6 +133,19 @@ test('keeps the settings control as an outlined white button', async ({ page }) 
   expect(metrics.settingsColor).toBe('rgb(238, 242, 213)')
   expect(metrics.settingsBorderColor).toBe(metrics.languageBorderColor)
   expect(metrics.settingsBoxShadow).toBe('none')
+
+  await settingsButton.hover()
+  const hoveredStyles = await settingsButton.evaluate((element) => {
+    const computed = getComputedStyle(element)
+    return {
+      backgroundColor: computed.backgroundColor,
+      transform: computed.transform,
+    }
+  })
+
+  expect(metrics.settingsTransition).toBe('0s')
+  expect(hoveredStyles.backgroundColor).toBe(metrics.settingsBackgroundColor)
+  expect(hoveredStyles.transform).toBe('none')
 })
 
 test('closes settings with Escape or an outside click', async ({ page }) => {
