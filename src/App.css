@@ -1,15 +1,82 @@
 .shell {
-  display: grid;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   min-height: 100vh;
-  place-items: center;
   padding: 2rem 1.25rem;
   background:
     radial-gradient(circle at 18% 16%, rgb(238 242 213 / 42%), transparent 34%),
     linear-gradient(145deg, #9eadd2 0%, #8998c4 100%);
 }
 
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: min(100%, 32rem);
+  margin-bottom: auto;
+  color: #eef2d5;
+}
+
+.brand {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.toolbar,
+.language-switcher {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.language-switcher {
+  padding: 0.2rem;
+  border: 1px solid rgb(238 242 213 / 45%);
+  border-radius: 999px;
+}
+
+.language-button,
+.settings-button,
+.text-button {
+  border: 0;
+  color: #eef2d5;
+  background: transparent;
+  cursor: pointer;
+}
+
+.language-button {
+  min-width: 2.25rem;
+  padding: 0.35rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.language-button.is-selected {
+  color: #30405d;
+  background: #eef2d5;
+}
+
+.settings-button {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  font-size: 1.25rem;
+}
+
+.language-button:focus-visible,
+.settings-button:focus-visible,
+.text-button:focus-visible {
+  outline: 2px solid #eef2d5;
+  outline-offset: 3px;
+}
+
 .welcome {
   width: min(100%, 32rem);
+  margin: auto 0;
   padding: clamp(2.25rem, 10vw, 5rem) clamp(1.5rem, 8vw, 4rem);
   border: 1px solid rgb(238 242 213 / 38%);
   border-radius: 2rem;
@@ -42,6 +109,14 @@ h1 {
   line-height: 1.6;
 }
 
+.session-summary {
+  margin: 1.25rem 0 0;
+  color: #eef2d5;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
 .start-button {
   min-width: 10rem;
   padding: 0.85rem 1.5rem;
@@ -63,6 +138,84 @@ h1 {
 .start-button:focus-visible {
   outline: 3px solid #eef2d5;
   outline-offset: 4px;
+}
+
+.settings-panel {
+  width: min(100%, 32rem);
+  margin: auto 0;
+  padding: clamp(1.5rem, 6vw, 2.5rem);
+  border: 1px solid rgb(238 242 213 / 38%);
+  border-radius: 2rem;
+  background: rgb(238 242 213 / 18%);
+  box-shadow: 0 1.5rem 4rem rgb(48 64 93 / 14%);
+  backdrop-filter: blur(12px);
+}
+
+.settings-heading,
+.range-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.settings-heading {
+  margin-bottom: 1.5rem;
+}
+
+.settings-heading h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.text-button {
+  padding: 0.25rem 0;
+  text-decoration: underline;
+  text-underline-offset: 0.2rem;
+}
+
+.settings-summary {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+  color: #eef2d5;
+  font-weight: 700;
+}
+
+.settings-fields {
+  display: grid;
+  gap: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+.range-field {
+  display: grid;
+  gap: 0.65rem;
+  color: #30405d;
+  font-weight: 650;
+}
+
+.range-value {
+  color: #eef2d5;
+  font-variant-numeric: tabular-nums;
+}
+
+input[type='range'] {
+  width: 100%;
+  accent-color: #b5e1d2;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 @media (prefers-reduced-motion: reduce) {

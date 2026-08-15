@@ -66,9 +66,9 @@ This checklist follows the approved [`SPEC.md`](../SPEC.md) and [`tasks/plan.md`
 
 **Acceptance criteria:**
 
-- [ ] Inhale/exhale accept `1–20`; holds accept `0–20`; cycles accept `1–25`.
-- [ ] The default is `4–4–4–4`, 15 cycles, shown as `15 cycles · 04:00` (localized).
-- [ ] `persist` saves only settings and language with `partialize`, a schema version, and migration; runtime state is never saved.
+- [x] Inhale/exhale accept `1–20`; holds accept `0–20`; cycles accept `1–25`.
+- [x] The default is `4–4–4–4`, 15 cycles, shown as `15 cycles · 04:00` (localized).
+- [x] `persist` saves only settings and language with `partialize`, a schema version, and migration; runtime state is never saved.
 
 **Verification:** Test bounds, duration math, malformed storage, migration, reset-to-default, and refresh behavior.
 
