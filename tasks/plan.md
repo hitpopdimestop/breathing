@@ -1,10 +1,10 @@
 # Implementation Plan: Breathing
 
-Status: **Derived from the approved `SPEC.md`; ready for human review before implementation.**
+Status: **Implementation in progress; Task 1 is complete and Task 2 is next.**
 
 ## Outcome
 
-Deliver a mobile-first, installable Breathing PWA with a one-tap `4–4–4–4` session, 15 complete cycles (`04:00`), Ukrainian and English interfaces, local settings, an organic full-screen tide, and offline operation after the first successful load. Implementation starts only after this plan and `tasks/todo.md` are reviewed.
+Deliver a mobile-first, installable Breathing PWA with a one-tap `4–4–4–4` session, 15 complete cycles (`04:00`), Ukrainian and English interfaces, local settings, an organic full-screen tide, and offline operation after the first successful load.
 
 ## Fixed decisions
 

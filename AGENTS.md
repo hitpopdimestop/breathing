@@ -2,7 +2,7 @@
 
 ## Project Structure & Module Organization
 
-The repository is currently documentation-first. Product scope lives in `docs/ideas/breathing.md`, architectural decisions in `docs/decisions/`, and implementation sequencing in `tasks/plan.md` plus `tasks/todo.md`.
+Product scope lives in `docs/ideas/breathing.md`, architectural decisions in `docs/decisions/`, implementation sequencing in `tasks/plan.md` plus `tasks/todo.md`, and the application is under `src/`.
 
 The planned application structure is:
 
@@ -20,7 +20,7 @@ Keep tests next to source when practical: `breathing-session.ts` → `breathing-
 
 ## Build, Test, and Development Commands
 
-Task 1 will scaffold the React/TypeScript/Vite project. Until `package.json` exists, these commands are expected conventions rather than available scripts:
+The React/TypeScript/Vite foundation is scaffolded. Use these repository scripts:
 
 - `yarn dev`: start the local Vite server
 - `yarn build`: type-check and create the production build

@@ -10,9 +10,9 @@ This checklist follows the approved [`SPEC.md`](../SPEC.md) and [`tasks/plan.md`
 
 **Acceptance criteria:**
 
-- [ ] `yarn dev`, `yarn typecheck`, `yarn lint`, `yarn test`, `yarn build`, and `yarn test:e2e` exist and run.
-- [ ] The start route renders at mobile and desktop viewport sizes.
-- [ ] Versions and the stack decision are recorded in `package.json`, the lockfile, and the ADR.
+- [x] `yarn dev`, `yarn typecheck`, `yarn lint`, `yarn test`, `yarn build`, and `yarn test:e2e` exist and run.
+- [x] The start route renders at mobile and desktop viewport sizes.
+- [x] Versions and the stack decision are recorded in `package.json`, the lockfile, and the ADR.
 
 **Verification:** Run all six scripts; open the start route in a real browser.
 
