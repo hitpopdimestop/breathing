@@ -2,7 +2,7 @@ import { useEffect, useState, type MouseEvent } from 'react'
 import { useStore } from 'zustand'
 
 import type { BreathConfig } from './domain/session-engine'
-import { createTranslator } from './i18n/localization'
+import { createTranslator, formatCycles } from './i18n/localization'
 import { getDurationSummary } from './store/settings-store'
 import { settingsStore } from './store/settings-store'
 import { SettingsPanel } from './ui/settings-panel'
@@ -134,6 +134,7 @@ function App() {
       {settingsOpen ? (
         <SettingsPanel
           config={config}
+          language={language}
           translate={t}
           onClose={() => setSettingsOpen(false)}
           onPhaseDurationChange={setPhaseDuration}
@@ -145,7 +146,7 @@ function App() {
           <p className="session-summary">
             <span>{pattern}</span>
             <span aria-hidden="true"> · </span>
-            <span>{config.cycles} {t('cycles')}</span>
+            <span>{formatCycles(language, config.cycles)}</span>
             <span aria-hidden="true"> · </span>
             <span>{duration.label}</span>
           </p>

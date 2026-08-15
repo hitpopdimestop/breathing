@@ -27,7 +27,7 @@ test('serves install metadata and completes a shortened session offline', async 
   await page.getByRole('slider', { name: 'Пауза' }).nth(1).fill('0')
   await page.getByRole('slider', { name: 'Циклів' }).fill('1')
   await page.getByRole('button', { name: 'Закрити' }).click()
-  await expect(page.getByText('1 циклів · 00:02')).toBeVisible()
+  await expect(page.getByText('1 цикл · 00:02')).toBeVisible()
 
   await page.evaluate(async () => {
     await navigator.serviceWorker.ready

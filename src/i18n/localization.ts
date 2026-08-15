@@ -11,7 +11,6 @@ export const dictionaries = {
     english: 'English',
     close: 'Закрити',
     secondsShort: 'с',
-    cycles: 'циклів',
     cyclesLabel: 'Циклів',
     duration: 'Тривалість',
     inhale: 'Вдих',
@@ -29,7 +28,6 @@ export const dictionaries = {
     english: 'English',
     close: 'Close',
     secondsShort: 's',
-    cycles: 'cycles',
     cyclesLabel: 'Cycles',
     duration: 'Duration',
     inhale: 'Inhale',
@@ -41,6 +39,31 @@ export const dictionaries = {
 
 export type Language = keyof typeof dictionaries
 export type TranslationKey = keyof typeof dictionaries.uk
+
+const cycleWords: Record<Language, Record<string, string>> = {
+  uk: {
+    one: 'цикл',
+    few: 'цикли',
+    many: 'циклів',
+    other: 'циклів',
+  },
+  en: {
+    one: 'cycle',
+    other: 'cycles',
+  },
+}
+
+const cyclePluralRules: Record<Language, Intl.PluralRules> = {
+  uk: new Intl.PluralRules('uk'),
+  en: new Intl.PluralRules('en'),
+}
+
+export function formatCycles(language: Language, count: number): string {
+  const category = cyclePluralRules[language].select(count)
+  const word = cycleWords[language][category] ?? cycleWords[language].other
+
+  return `${count} ${word}`
+}
 
 export function getInitialLanguage(
   locale: string | undefined = getBrowserLocale(),

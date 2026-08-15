@@ -3,7 +3,7 @@ import {
   getDurationSummary,
   type PhaseDurationKey,
 } from '../store/settings-store'
-import type { TranslationKey } from '../i18n/localization'
+import { formatCycles, type Language, type TranslationKey } from '../i18n/localization'
 
 type PhaseField = Readonly<{
   id: string
@@ -34,6 +34,7 @@ const PHASE_FIELDS: readonly PhaseField[] = [
 
 type SettingsPanelProps = Readonly<{
   config: BreathConfig
+  language: Language
   translate: (key: TranslationKey) => string
   onClose: () => void
   onPhaseDurationChange: (phase: PhaseDurationKey, seconds: number) => void
@@ -42,6 +43,7 @@ type SettingsPanelProps = Readonly<{
 
 export function SettingsPanel({
   config,
+  language,
   translate,
   onClose,
   onPhaseDurationChange,
@@ -65,7 +67,7 @@ export function SettingsPanel({
       </div>
 
       <div className="settings-summary" aria-live="polite">
-        <span>{config.cycles} {translate('cycles')}</span>
+        <span>{formatCycles(language, config.cycles)}</span>
         <span aria-hidden="true"> · </span>
         <span>{duration.label}</span>
       </div>
