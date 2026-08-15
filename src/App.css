@@ -1,0 +1,72 @@
+.shell {
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
+  padding: 2rem 1.25rem;
+  background:
+    radial-gradient(circle at 18% 16%, rgb(238 242 213 / 42%), transparent 34%),
+    linear-gradient(145deg, #9eadd2 0%, #8998c4 100%);
+}
+
+.welcome {
+  width: min(100%, 32rem);
+  padding: clamp(2.25rem, 10vw, 5rem) clamp(1.5rem, 8vw, 4rem);
+  border: 1px solid rgb(238 242 213 / 38%);
+  border-radius: 2rem;
+  background: rgb(238 242 213 / 18%);
+  box-shadow: 0 1.5rem 4rem rgb(48 64 93 / 14%);
+  text-align: center;
+  backdrop-filter: blur(12px);
+}
+
+.eyebrow {
+  margin: 0 0 1.5rem;
+  color: #eef2d5;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(3rem, 16vw, 5.5rem);
+  letter-spacing: -0.07em;
+  line-height: 0.95;
+}
+
+.intro {
+  max-width: 22rem;
+  margin: 1.5rem auto 2rem;
+  color: rgb(48 64 93 / 78%);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.start-button {
+  min-width: 10rem;
+  padding: 0.85rem 1.5rem;
+  border: 0;
+  border-radius: 999px;
+  color: #30405d;
+  background: #b5e1d2;
+  box-shadow: 0 0.75rem 1.5rem rgb(48 64 93 / 15%);
+  cursor: pointer;
+  font-weight: 700;
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.start-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 1rem 1.75rem rgb(48 64 93 / 20%);
+}
+
+.start-button:focus-visible {
+  outline: 3px solid #eef2d5;
+  outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .start-button {
+    transition: none;
+  }
+}
