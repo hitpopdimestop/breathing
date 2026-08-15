@@ -11,6 +11,7 @@ import {
   PreparationScreen,
 } from './ui/session-screens'
 import { useMeditationSession } from './ui/use-meditation-session'
+import { useScreenWakeLock } from './pwa/use-screen-wake-lock'
 import './App.css'
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
   const setPhaseDuration = useStore(settingsStore, (state) => state.setPhaseDuration)
   const setCycles = useStore(settingsStore, (state) => state.setCycles)
   const meditationSession = useMeditationSession()
+  useScreenWakeLock(meditationSession.status === 'active')
   const t = createTranslator(language)
   const duration = getDurationSummary(config)
 

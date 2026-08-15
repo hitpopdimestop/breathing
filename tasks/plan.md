@@ -1,6 +1,6 @@
 # Implementation Plan: Breathing
 
-Status: **Implementation in progress; Tasks 1–7 are complete and Task 8 is next.**
+Status: **Implementation in progress; Tasks 1–8 are complete and Task 9 is next.**
 
 ## Outcome
 

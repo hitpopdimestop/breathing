@@ -54,9 +54,9 @@ This checklist follows the approved [`SPEC.md`](../SPEC.md) and [`tasks/plan.md`
 
 ### Checkpoint: Foundation
 
-- [ ] All six scripts pass.
-- [ ] The timing model and dictionaries are independent of React, storage, and animation.
-- [ ] Human review confirms the contracts before UI behavior is built.
+- [x] All six scripts pass.
+- [x] The timing model and dictionaries are independent of React, storage, and animation.
+- [x] Human review confirms the contracts before UI behavior is built.
 
 ## Phase 2 — Settings and complete flow
 
@@ -94,9 +94,9 @@ This checklist follows the approved [`SPEC.md`](../SPEC.md) and [`tasks/plan.md`
 
 ### Checkpoint: Core flow
 
-- [ ] Standard and changed configurations start and finish on full-cycle boundaries.
-- [ ] No runtime session state survives reload.
-- [ ] Timing remains correct with a placeholder visual.
+- [x] Standard and changed configurations start and finish on full-cycle boundaries.
+- [x] No runtime session state survives reload.
+- [x] Timing remains correct with a placeholder visual.
 
 ## Phase 3 — Tide visual and responsive experience
 
@@ -134,8 +134,8 @@ This checklist follows the approved [`SPEC.md`](../SPEC.md) and [`tasks/plan.md`
 
 ### Checkpoint: Visual experience
 
-- [ ] A full `04:00` session is calm, legible, and directionally obvious on phone and desktop.
-- [ ] The animation remains synchronized after delayed frames or hidden-tab recovery.
+- [x] A full `04:00` session is calm, legible, and directionally obvious on phone and desktop.
+- [x] The animation remains synchronized after delayed frames or hidden-tab recovery.
 
 ## Phase 4 — Installable offline product and release
 
@@ -145,9 +145,9 @@ This checklist follows the approved [`SPEC.md`](../SPEC.md) and [`tasks/plan.md`
 
 **Acceptance criteria:**
 
-- [ ] Supported platforms expose their own native install affordance and the installed app opens standalone.
-- [ ] After one successful online load, a full shortened session works offline.
-- [ ] Breathing renders no custom install banner, help screen, or fallback instructions; failed wake-lock requests never block a session.
+- [x] The manifest provides standalone display, purpose-built 192/512 icons, and the browser/system owns installation UI.
+- [x] After one successful online load, a shortened session completes after an offline reload.
+- [x] Breathing renders no custom install banner, help screen, or fallback instructions; failed wake-lock requests never block a session.
 
 **Verification:** Inspect manifest and service worker; install on supported Android and iOS devices where available; run airplane-mode session; test an update during an active session.
 
