@@ -23,3 +23,13 @@ test('switches the start screen language before a session', async ({ page }) => 
   await expect(page.getByRole('button', { name: 'Start' })).toBeVisible()
   await expect(page.getByText('15 cycles · 04:00')).toBeVisible()
 })
+
+test('keeps settings open while switching language', async ({ page }) => {
+  await page.goto('/')
+  await page.getByRole('button', { name: 'Налаштування' }).click()
+
+  await page.getByRole('button', { name: 'English' }).click()
+
+  await expect(page.getByRole('dialog')).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'Settings' })).toBeVisible()
+})

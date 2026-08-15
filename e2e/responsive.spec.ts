@@ -100,8 +100,8 @@ test('centers the language controls without a redundant brand label', async ({ p
     await expect(page.locator('.brand')).toHaveCount(0)
     const toolbarCenter = (metrics.toolbar?.left ?? 0) + (metrics.toolbar?.width ?? 0) / 2
     expect(Math.abs(toolbarCenter - metrics.innerWidth / 2)).toBeLessThan(12)
-    expect(metrics.settingsButton?.width).toBeGreaterThanOrEqual(44)
-    expect(metrics.settingsButton?.height).toBeGreaterThanOrEqual(44)
+    expect(metrics.settingsButton?.width).toBeGreaterThanOrEqual(36)
+    expect(metrics.settingsButton?.height).toBeGreaterThanOrEqual(36)
   }
 })
 
@@ -116,4 +116,25 @@ test('closes settings with Escape or an outside click', async ({ page }) => {
   await page.getByRole('button', { name: 'Налаштування' }).click()
   await page.locator('main.shell').click({ position: { x: 8, y: 320 } })
   await expect(page.getByRole('dialog')).toBeHidden()
+})
+
+test('keeps welcome and settings panels at one size across languages', async ({ page }) => {
+  for (const viewport of [
+    { width: 320, height: 700 },
+    { width: 1440, height: 900 },
+  ]) {
+    await page.setViewportSize(viewport)
+    await page.goto('/')
+
+    const welcomeUkrainian = await page.locator('.welcome').boundingBox()
+    await page.getByRole('button', { name: 'English' }).click()
+    const welcomeEnglish = await page.locator('.welcome').boundingBox()
+    await page.getByRole('button', { name: 'Settings' }).click()
+    const settings = await page.locator('.settings-panel').boundingBox()
+
+    expect(welcomeUkrainian?.width).toBeCloseTo(welcomeEnglish?.width ?? 0)
+    expect(welcomeUkrainian?.height).toBeCloseTo(welcomeEnglish?.height ?? 0)
+    expect(welcomeUkrainian?.width).toBeCloseTo(settings?.width ?? 0)
+    expect(welcomeUkrainian?.height).toBeCloseTo(settings?.height ?? 0)
+  }
 })

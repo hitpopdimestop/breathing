@@ -88,7 +88,7 @@ Tests live beside source as `*.test.ts(x)`; Playwright scenarios live in `e2e/*.
 
 - The default start screen shows `4–4–4–4`, `15 cycles`, and `04:00`.
 - Inhale and exhale values validate from 1 through 20 seconds; hold values validate from 0 through 20 seconds; cycles validate from 1 through 50.
-- A complete session runs through 15 cycles with exact phase timing and no session controls.
+- A complete session runs through 15 cycles with exact phase timing and no visible session controls; clicking the session or pressing `Escape` cancels it and returns to the start screen.
 - The current phase and `4 → 3 → 2 → 1` countdown remain synchronized with elapsed time.
 - Custom settings change only at full-cycle boundaries and survive app restarts on the same installed device.
 - Ukrainian and English flows have matching coverage, use browser locale for the initial language, and have no layout break from «Затримка дихання».

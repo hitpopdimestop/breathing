@@ -12,7 +12,7 @@ Deliver a mobile-first, installable Breathing PWA with a one-tap `4–4–4–4`
 - Zustand `persist` stores only phase settings, cycle count, and language with explicit `partialize` and migration.
 - Inhale/exhale: `1–20` seconds; holds: `0–20` seconds; cycles: `1–50`.
 - Browser locale chooses the initial language: `uk` → Ukrainian, everything else → English.
-- The session is driven by elapsed time, ends only after a full cycle, and has no pause, exit, or total-time control.
+- The session is driven by elapsed time and has no visible pause, exit, or total-time controls; clicking the session or pressing `Escape` cancels it and returns to the start screen.
 - Installation UI is browser/system-owned. Breathing renders no custom install banner, help screen, or fallback instructions.
 - Screen Wake Lock is best-effort and silent on unsupported or failed requests.
 - The visual renderer is selected by a throwaway CSS-first motion spike; Canvas 2D is compared only if CSS is too curtain-like, and Paper.js is not a default dependency.

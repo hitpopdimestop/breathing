@@ -9,7 +9,7 @@ Provide the complete user flow from ready-to-start configuration through a finis
 1. Start screen shows the current pattern, cycle summary, settings entry, language entry, and «Почати».
 2. A short `3 → 2 → 1` preparation runs before the first inhale.
 3. The active screen shows the current phase label, `4 → 3 → 2 → 1` countdown, and tide visual.
-4. The active screen does not show a total timer, pause button, or exit control.
+4. The active screen does not show a total timer, pause button, or exit control; clicking the session or pressing `Escape` cancels it and returns to the start screen.
 5. After the final lower hold, the app returns to the ready start screen with the saved settings.
 
 The session snapshots settings at start. Its phase and completion state come only from `session-engine`; the visual receives derived state and cannot advance time.

@@ -83,7 +83,7 @@ This checklist follows the approved [`SPEC.md`](../SPEC.md) and [`tasks/plan.md`
 **Acceptance criteria:**
 
 - [x] One tap starts the default session after `3 → 2 → 1` preparation.
-- [x] Active state shows only phase label, phase countdown, and visual placeholder—no total timer, pause, or exit controls.
+- [x] Active state shows only phase label, phase countdown, and visual placeholder—no visible controls; clicking the session or pressing `Escape` returns to the start screen.
 - [x] Completion returns to the start screen with saved configuration; reload or navigation abandons the session.
 
 **Verification:** Component tests cover start, phase transitions, completion, return-to-ready, language changes, and snapshot isolation; run a shortened browser flow.

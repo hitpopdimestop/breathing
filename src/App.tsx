@@ -21,33 +21,44 @@ function App() {
   const setPhaseDuration = useStore(settingsStore, (state) => state.setPhaseDuration)
   const setCycles = useStore(settingsStore, (state) => state.setCycles)
   const meditationSession = useMeditationSession()
+  const sessionStatus = meditationSession.status
+  const stopSession = meditationSession.stop
   useScreenWakeLock(meditationSession.status === 'active')
   const t = createTranslator(language)
   const duration = getDurationSummary(config)
 
   useEffect(() => {
-    if (!settingsOpen) {
+    const sessionActive = sessionStatus === 'preparing' || sessionStatus === 'active'
+
+    if (!settingsOpen && !sessionActive) {
       return undefined
     }
 
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        event.preventDefault()
+      if (event.key !== 'Escape') {
+        return
+      }
+
+      event.preventDefault()
+
+      if (settingsOpen) {
         setSettingsOpen(false)
+      } else {
+        stopSession()
       }
     }
 
     window.addEventListener('keydown', handleKeyDown)
 
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [settingsOpen])
+  }, [sessionStatus, settingsOpen, stopSession])
 
   const handleShellClick = (event: MouseEvent<HTMLElement>) => {
     if (!settingsOpen || !(event.target instanceof Element)) {
       return
     }
 
-    if (event.target.closest('.settings-panel, .settings-button')) {
+    if (event.target.closest('.settings-panel, .settings-button, .app-header')) {
       return
     }
 
@@ -62,6 +73,7 @@ function App() {
       <div lang={language}>
         <PreparationScreen
           translate={t}
+          onExit={meditationSession.stop}
           secondsRemaining={meditationSession.preparationSecondsRemaining}
         />
       </div>
@@ -71,7 +83,11 @@ function App() {
   if (meditationSession.status === 'active' && meditationSession.activeState !== null) {
     return (
       <div lang={language}>
-        <ActiveSessionScreen translate={t} state={meditationSession.activeState} />
+        <ActiveSessionScreen
+          translate={t}
+          onExit={meditationSession.stop}
+          state={meditationSession.activeState}
+        />
       </div>
     )
   }

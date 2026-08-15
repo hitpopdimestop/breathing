@@ -17,6 +17,7 @@ type MeditationSession = Readonly<{
   preparationSecondsRemaining: number | null
   activeState: ActiveSessionState | null
   start: (config: BreathConfig) => void
+  stop: () => void
 }>
 
 export function useMeditationSession(): MeditationSession {
@@ -34,6 +35,14 @@ export function useMeditationSession(): MeditationSession {
     setSessionStartedAt(null)
     setNowMs(startedAt)
     setStatus('preparing')
+  }, [])
+
+  const stop = useCallback(() => {
+    setStatus('ready')
+    setConfigSnapshot(null)
+    setPreparationStartedAt(null)
+    setSessionStartedAt(null)
+    setNowMs(0)
   }, [])
 
   useEffect(() => {
@@ -96,6 +105,7 @@ export function useMeditationSession(): MeditationSession {
     preparationSecondsRemaining,
     activeState,
     start,
+    stop,
   }
 }
 

@@ -25,3 +25,17 @@ test('returns to the start screen after a shortened session completes', async ({
   await expect(page.getByRole('heading', { name: 'Breathing' })).toBeVisible({ timeout: 12000 })
   await expect(page.getByRole('button', { name: 'Почати' })).toBeVisible()
 })
+
+test('interrupts an active session with a click or Escape', async ({ page }) => {
+  await page.goto('/')
+
+  await page.getByRole('button', { name: 'Почати' }).click()
+  await expect(page.getByText('Вдих')).toBeVisible({ timeout: 8000 })
+  await page.locator('.session-shell').click({ position: { x: 10, y: 10 } })
+  await expect(page.getByRole('heading', { name: 'Breathing' })).toBeVisible()
+
+  await page.getByRole('button', { name: 'Почати' }).click()
+  await expect(page.getByText('Вдих')).toBeVisible({ timeout: 8000 })
+  await page.keyboard.press('Escape')
+  await expect(page.getByRole('heading', { name: 'Breathing' })).toBeVisible()
+})

@@ -14,14 +14,16 @@ const PHASE_LABEL_KEYS: Record<SessionPhase, Extract<TranslationKey, 'inhale' | 
 
 type SessionScreenProps = Readonly<{
   translate: (key: TranslationKey) => string
+  onExit: () => void
 }>
 
 export function PreparationScreen({
   translate,
+  onExit,
   secondsRemaining,
 }: SessionScreenProps & { secondsRemaining: number }) {
   return (
-    <main className="session-shell" aria-live="polite">
+    <main className="session-shell" aria-live="polite" onClick={onExit}>
       <div className="session-content">
         <p className="session-label">{translate('preparing')}</p>
         <p className="session-countdown" aria-label={`${secondsRemaining}`}>
@@ -34,10 +36,11 @@ export function PreparationScreen({
 
 export function ActiveSessionScreen({
   translate,
+  onExit,
   state,
 }: SessionScreenProps & { state: ActiveSessionState }) {
   return (
-    <main className={`session-shell phase-${state.phase}`} aria-live="polite">
+    <main className={`session-shell phase-${state.phase}`} aria-live="polite" onClick={onExit}>
       <TideVisual state={state} />
       <div className="session-content">
         <p className="session-label">{translate(PHASE_LABEL_KEYS[state.phase])}</p>
