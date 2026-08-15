@@ -122,9 +122,9 @@ This checklist follows the approved [`SPEC.md`](../SPEC.md) and [`tasks/plan.md`
 
 **Acceptance criteria:**
 
-- [ ] Visual direction is understandable without explanation and never owns timing.
-- [ ] «Затримка дихання» and countdown remain readable at mobile and desktop widths.
-- [ ] Decorative transitions do not change phase duration or create boundary jumps.
+- [x] Visual direction is understandable without explanation and never owns timing.
+- [x] «Затримка дихання» and countdown remain readable at mobile and desktop widths.
+- [x] Decorative transitions do not change phase duration or create boundary jumps.
 
 **Verification:** Run visual checks at each phase midpoint and boundary, across both languages, with reduced motion enabled; run tests and build.
 

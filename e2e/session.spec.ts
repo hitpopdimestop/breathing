@@ -1,6 +1,9 @@
 import { expect, test } from '@playwright/test'
 
+test.use({ reducedMotion: 'reduce' })
+
 test('runs a shortened session from preparation to completion', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' })
   await page.goto('/')
   await page.getByRole('button', { name: 'Налаштування' }).click()
 
@@ -14,6 +17,10 @@ test('runs a shortened session from preparation to completion', async ({ page })
   await page.getByRole('button', { name: 'Почати' }).click()
   await expect(page.getByText('Підготовка')).toBeVisible()
   await expect(page.getByText('Вдих')).toBeVisible({ timeout: 8000 })
+  await expect(page.locator('.tide-visual')).toBeVisible()
+  await expect
+    .poll(() => page.locator('.tide-surface').evaluate((element) => getComputedStyle(element).animationName))
+    .toBe('none')
   await expect(page.getByText('Видих')).toBeVisible({ timeout: 8000 })
   await expect(page.getByText('Сесію завершено')).toBeVisible({ timeout: 12000 })
   await expect(page.getByRole('button', { name: 'Ще раз' })).toBeVisible()
