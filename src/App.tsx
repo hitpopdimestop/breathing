@@ -7,7 +7,6 @@ import { settingsStore } from './store/settings-store'
 import { SettingsPanel } from './ui/settings-panel'
 import {
   ActiveSessionScreen,
-  CompletionScreen,
   PreparationScreen,
 } from './ui/session-screens'
 import { useMeditationSession } from './ui/use-meditation-session'
@@ -44,14 +43,6 @@ function App() {
     return (
       <div lang={language}>
         <ActiveSessionScreen translate={t} state={meditationSession.activeState} />
-      </div>
-    )
-  }
-
-  if (meditationSession.status === 'complete') {
-    return (
-      <div lang={language}>
-        <CompletionScreen translate={t} onRepeat={() => meditationSession.start(config)} />
       </div>
     )
   }

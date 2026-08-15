@@ -28,5 +28,6 @@ test('serves install metadata and completes a shortened session offline', async 
   await expect(page.getByRole('heading', { name: 'Breathing' })).toBeVisible()
   await expect(page.getByRole('button', { name: 'Почати' })).toBeVisible()
   await page.getByRole('button', { name: 'Почати' }).click()
-  await expect(page.getByText('Сесію завершено')).toBeVisible({ timeout: 12000 })
+  await expect(page.getByRole('heading', { name: 'Breathing' })).toBeVisible({ timeout: 12000 })
+  await expect(page.getByRole('button', { name: 'Почати' })).toBeVisible()
 })

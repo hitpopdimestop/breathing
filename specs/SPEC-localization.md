@@ -17,7 +17,7 @@ Both dictionaries expose the same key set. The phase labels are «Вдих», «
 
 ## Testing
 
-Test dictionary key parity and render the start, settings, session, and completion states in both languages.
+Test dictionary key parity and render the start, settings, and active session states in both languages.
 
 ## Boundaries
 

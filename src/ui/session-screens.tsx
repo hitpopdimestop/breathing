@@ -22,10 +22,12 @@ export function PreparationScreen({
 }: SessionScreenProps & { secondsRemaining: number }) {
   return (
     <main className="session-shell" aria-live="polite">
-      <p className="session-label">{translate('preparing')}</p>
-      <p className="session-countdown" aria-label={`${secondsRemaining}`}>
-        {secondsRemaining}
-      </p>
+      <div className="session-content">
+        <p className="session-label">{translate('preparing')}</p>
+        <p className="session-countdown" aria-label={`${secondsRemaining}`}>
+          {secondsRemaining}
+        </p>
+      </div>
     </main>
   )
 }
@@ -37,24 +39,12 @@ export function ActiveSessionScreen({
   return (
     <main className={`session-shell phase-${state.phase}`} aria-live="polite">
       <TideVisual state={state} />
-      <p className="session-label">{translate(PHASE_LABEL_KEYS[state.phase])}</p>
-      <p className="session-countdown" aria-label={`${state.secondsRemaining}`}>
-        {state.secondsRemaining}
-      </p>
-    </main>
-  )
-}
-
-export function CompletionScreen({
-  onRepeat,
-  translate,
-}: SessionScreenProps & { onRepeat: () => void }) {
-  return (
-    <main className="session-shell completion-shell">
-      <p className="session-label">{translate('complete')}</p>
-      <button className="start-button" type="button" onClick={onRepeat}>
-        {translate('repeat')}
-      </button>
+      <div className="session-content">
+        <p className="session-label">{translate(PHASE_LABEL_KEYS[state.phase])}</p>
+        <p className="session-countdown" aria-label={`${state.secondsRemaining}`}>
+          {state.secondsRemaining}
+        </p>
+      </div>
     </main>
   )
 }

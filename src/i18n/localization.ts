@@ -18,8 +18,6 @@ export const dictionaries = {
     hold: 'Затримка дихання',
     exhale: 'Видих',
     preparing: 'Підготовка',
-    complete: 'Сесію завершено',
-    repeat: 'Ще раз',
   },
   en: {
     appName: APP_NAME,
@@ -38,8 +36,6 @@ export const dictionaries = {
     hold: 'Hold',
     exhale: 'Exhale',
     preparing: 'Prepare',
-    complete: 'Session complete',
-    repeat: 'Again',
   },
 } as const
 

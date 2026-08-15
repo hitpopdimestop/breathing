@@ -45,7 +45,7 @@ Task 1: foundation
 4. Add the validated Zustand settings store, persisted schema migration, cycle-duration summary, and settings UI.
 5. Build start, preparation, active, and completion states around an immutable configuration snapshot; use a placeholder visual until the motion spike is selected.
 
-**Checkpoint:** a shortened browser test can start, cross every phase, complete, repeat, and abandon without restoring partial runtime state.
+**Checkpoint:** a shortened browser test can start, cross every phase, complete, return to ready, and abandon without restoring partial runtime state.
 
 ### Phase 3 — Tide visual and responsive experience
 

@@ -72,7 +72,7 @@ Do not persist active-session state. UI strings come from typed dictionaries rat
 
 - `session-engine`: unit-test every phase boundary, countdown value, cycle boundary, and total duration.
 - `user-settings`: test validation, full-cycle slider calculations, persistence, and schema migration behavior.
-- React session flow: test start, preparation, phase changes, completion, and repeat-session behavior.
+- React session flow: test start, preparation, phase changes, completion, and return-to-ready behavior.
 - `tide-visual`: verify phase-to-visual mappings and readable text at representative progress points.
 - `installable-pwa`: verify manifest, service worker, offline launch, installation metadata, and update behavior in a real browser.
 

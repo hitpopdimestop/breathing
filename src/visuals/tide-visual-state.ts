@@ -1,7 +1,7 @@
 import type { SessionPhase } from '../domain/session-engine'
 
-const LOW_TIDE_LEVEL = 0.22
-const HIGH_TIDE_LEVEL = 0.76
+const LOW_TIDE_LEVEL = 0
+const HIGH_TIDE_LEVEL = 1
 
 export type TideMotion = 'rising' | 'upper-hold' | 'falling' | 'lower-hold'
 
@@ -33,5 +33,10 @@ function clamp(value: number): number {
 }
 
 function interpolate(start: number, end: number, progress: number): number {
-  return Math.round((start + (end - start) * progress) * 100) / 100
+  const easedProgress = smoothstep(progress)
+  return Math.round((start + (end - start) * easedProgress) * 100) / 100
+}
+
+function smoothstep(progress: number): number {
+  return progress * progress * (3 - 2 * progress)
 }
