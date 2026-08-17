@@ -12,12 +12,14 @@ test('fits the start screen at mobile and desktop widths', async ({ page }) => {
       innerWidth: window.innerWidth,
       innerHeight: window.innerHeight,
       scrollWidth: document.documentElement.scrollWidth,
+      body: document.querySelector('.app-body')?.getBoundingClientRect(),
       welcome: document.querySelector('.welcome')?.getBoundingClientRect(),
     }))
 
     expect(dimensions.scrollWidth).toBeLessThanOrEqual(dimensions.innerWidth)
     const welcomeCenter = (dimensions.welcome?.top ?? 0) + (dimensions.welcome?.height ?? 0) / 2
-    expect(Math.abs(welcomeCenter - dimensions.innerHeight / 2)).toBeLessThan(12)
+    const bodyCenter = (dimensions.body?.top ?? 0) + (dimensions.body?.height ?? 0) / 2
+    expect(Math.abs(welcomeCenter - bodyCenter)).toBeLessThan(12)
     await expect(page.getByRole('heading', { name: 'Breathing' })).toBeVisible()
   }
 })
@@ -54,16 +56,22 @@ test('stays within a narrow viewport when mobile page zoom reduces layout width'
   expect(settingsDimensions.close?.right).toBeLessThanOrEqual(settingsDimensions.innerWidth)
 })
 
-test('keeps the start card below controls in a short mobile viewport', async ({ page }) => {
-  await page.setViewportSize({ width: 320, height: 560 })
-  await page.goto('/')
+test('keeps the start card below controls in short viewports', async ({ page }) => {
+  for (const viewport of [
+    { width: 320, height: 560 },
+    { width: 1440, height: 700 },
+    { width: 1280, height: 600 },
+  ]) {
+    await page.setViewportSize(viewport)
+    await page.goto('/')
 
-  const metrics = await page.evaluate(() => ({
-    header: document.querySelector('.app-header')?.getBoundingClientRect(),
-    welcome: document.querySelector('.welcome')?.getBoundingClientRect(),
-  }))
+    const metrics = await page.evaluate(() => ({
+      header: document.querySelector('.app-header')?.getBoundingClientRect(),
+      welcome: document.querySelector('.welcome')?.getBoundingClientRect(),
+    }))
 
-  expect(metrics.welcome?.top).toBeGreaterThanOrEqual((metrics.header?.bottom ?? 0) + 8)
+    expect(metrics.welcome?.top).toBeGreaterThanOrEqual((metrics.header?.bottom ?? 0) + 8)
+  }
 })
 
 test('keeps the active tide full-screen and content centered', async ({ page }) => {
@@ -158,6 +166,8 @@ test('gives mobile controls comfortable touch targets', async ({ page }) => {
 
 test('keeps the settings panel below the mobile toolbar', async ({ page }) => {
   for (const viewport of [
+    { width: 1440, height: 700 },
+    { width: 1280, height: 600 },
     { width: 280, height: 700 },
     { width: 320, height: 700 },
     { width: 390, height: 844 },
@@ -188,13 +198,14 @@ test('keeps the settings panel aligned with the welcome panel', async ({ page })
       const panel = document.querySelector('.settings-panel')?.getBoundingClientRect()
 
       return {
-        innerHeight: window.innerHeight,
+        body: document.querySelector('.app-body')?.getBoundingClientRect(),
         panel,
       }
     })
 
     const panelCenter = (metrics.panel?.top ?? 0) + (metrics.panel?.height ?? 0) / 2
-    expect(Math.abs(panelCenter - metrics.innerHeight / 2)).toBeLessThan(12)
+    const bodyCenter = (metrics.body?.top ?? 0) + (metrics.body?.height ?? 0) / 2
+    expect(Math.abs(panelCenter - bodyCenter)).toBeLessThan(12)
   }
 })
 
@@ -363,17 +374,25 @@ test('keeps welcome and settings panels at one size across languages', async ({ 
   ]) {
     await page.setViewportSize(viewport)
     await page.goto('/')
+    await page.locator('.language-button').first().click()
 
     const welcomeUkrainian = await page.locator('.welcome').boundingBox()
+    await page.getByRole('button', { name: 'Налаштування' }).click()
+    const settingsUkrainian = await page.locator('.settings-panel').boundingBox()
+
+    expect(welcomeUkrainian?.width).toBeCloseTo(settingsUkrainian?.width ?? 0)
+    expect(welcomeUkrainian?.height).toBeCloseTo(settingsUkrainian?.height ?? 0)
+
+    await page.getByRole('button', { name: 'Закрити' }).click()
     await page.getByRole('button', { name: 'English' }).click()
     const welcomeEnglish = await page.locator('.welcome').boundingBox()
     await page.getByRole('button', { name: 'Settings' }).click()
-    const settings = await page.locator('.settings-panel').boundingBox()
+    const settingsEnglish = await page.locator('.settings-panel').boundingBox()
 
     expect(welcomeUkrainian?.width).toBeCloseTo(welcomeEnglish?.width ?? 0)
     expect(welcomeUkrainian?.height).toBeCloseTo(welcomeEnglish?.height ?? 0)
-    expect(welcomeUkrainian?.width).toBeCloseTo(settings?.width ?? 0)
-    expect(welcomeUkrainian?.height).toBeCloseTo(settings?.height ?? 0)
+    expect(welcomeUkrainian?.width).toBeCloseTo(settingsEnglish?.width ?? 0)
+    expect(welcomeUkrainian?.height).toBeCloseTo(settingsEnglish?.height ?? 0)
   }
 })
 

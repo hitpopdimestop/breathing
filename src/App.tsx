@@ -138,35 +138,37 @@ function App() {
         </div>
       </header>
 
-      {settingsOpen ? (
-        <SettingsPanel
-          config={config}
-          language={language}
-          translate={t}
-          onClose={() => setSettingsOpen(false)}
-          onPhaseDurationChange={setPhaseDuration}
-          onCyclesChange={setCycles}
-        />
-      ) : (
-        <section className="welcome" aria-labelledby="app-title">
-          <h1 id="app-title">{t('appName')}</h1>
-          <p className="session-summary">
-            <span>{pattern}</span>
-            <span aria-hidden="true"> · </span>
-            <span>{formatCycles(language, config.cycles)}</span>
-            <span aria-hidden="true"> · </span>
-            <span>{duration.label}</span>
-          </p>
-          <p className="intro">{t('intro')}</p>
-          <button
-            className="start-button"
-            type="button"
-            onClick={() => meditationSession.start(config)}
-          >
-            {t('start')}
-          </button>
-        </section>
-      )}
+      <div className="app-body">
+        {settingsOpen ? (
+          <SettingsPanel
+            config={config}
+            language={language}
+            translate={t}
+            onClose={() => setSettingsOpen(false)}
+            onPhaseDurationChange={setPhaseDuration}
+            onCyclesChange={setCycles}
+          />
+        ) : (
+          <section className="welcome" aria-labelledby="app-title">
+            <h1 id="app-title">{t('appName')}</h1>
+            <p className="session-summary">
+              <span>{pattern}</span>
+              <span aria-hidden="true"> · </span>
+              <span>{formatCycles(language, config.cycles)}</span>
+              <span aria-hidden="true"> · </span>
+              <span>{duration.label}</span>
+            </p>
+            <p className="intro">{t('intro')}</p>
+            <button
+              className="start-button"
+              type="button"
+              onClick={() => meditationSession.start(config)}
+            >
+              {t('start')}
+            </button>
+          </section>
+        )}
+      </div>
     </main>
   )
 }
