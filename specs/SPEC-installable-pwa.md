@@ -6,9 +6,9 @@ Make Breathing installable from a mobile browser, launchable from the home scree
 
 ## Contract
 
-The PWA includes a manifest with Breathing name, standalone display, theme colors, start URL, and purpose-built icons. A service worker caches the deployable app shell and required local assets. Updates activate automatically without interrupting an active session; the visible shell reload waits until the session finishes or the next launch.
+The PWA includes a manifest with Breathing name, standalone display, theme colors, start URL, and purpose-built icons. A service worker caches the deployable app shell and required local assets. Updates activate automatically without interrupting the visible shell or an active session; the updated shell is picked up on the next navigation or launch.
 
-The install experience is entirely browser- and system-controlled. If the browser exposes a native install affordance, the person may accept it. Breathing does not render a custom install banner, help screen, or fallback instructions. Service-worker updates use auto-update behavior; a fresh shell reloads automatically when no session is active, and waits until the current session ends otherwise. During an active session, the app may request Screen Wake Lock when supported; failure is silent and never blocks a session.
+The install experience is entirely browser- and system-controlled. If the browser exposes a native install affordance, the person may accept it. Breathing does not render a custom install banner, help screen, or fallback instructions. Service-worker updates use auto-update behavior without forcing a visible page reload; a later navigation or launch receives the new shell. During an active session, the app may request Screen Wake Lock when supported; failure is silent and never blocks a session.
 
 ## Acceptance Criteria
 
