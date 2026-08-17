@@ -269,6 +269,35 @@ test('keeps the settings control as an outlined white button', async ({ page }) 
   await expect(settingsButton.locator('svg')).toHaveCount(1)
 })
 
+test('centers the settings gear inside its button', async ({ page }) => {
+  for (const viewport of [
+    { width: 1440, height: 900 },
+    { width: 390, height: 844 },
+  ]) {
+    await page.setViewportSize(viewport)
+    await page.goto('/')
+
+    const centers = await page.evaluate(() => {
+      const button = document.querySelector('.settings-button')?.getBoundingClientRect()
+      const icon = document.querySelector('.settings-button svg')?.getBoundingClientRect()
+
+      return {
+        button: {
+          x: (button?.left ?? 0) + (button?.width ?? 0) / 2,
+          y: (button?.top ?? 0) + (button?.height ?? 0) / 2,
+        },
+        icon: {
+          x: (icon?.left ?? 0) + (icon?.width ?? 0) / 2,
+          y: (icon?.top ?? 0) + (icon?.height ?? 0) / 2,
+        },
+      }
+    })
+
+    expect(Math.abs(centers.icon.x - centers.button.x)).toBeLessThan(1)
+    expect(Math.abs(centers.icon.y - centers.button.y)).toBeLessThan(1)
+  }
+})
+
 test('keeps the settings gear complete at desktop and mobile sizes', async ({ page }) => {
   for (const viewport of [
     { width: 1440, height: 900 },

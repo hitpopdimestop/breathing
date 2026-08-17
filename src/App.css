@@ -60,14 +60,18 @@
 }
 
 .settings-button {
+  display: grid;
   width: 2.0625rem;
   height: 2.0625rem;
+  padding: 0;
+  place-items: center;
   border: 1px solid rgb(238 242 213 / 45%);
   border-radius: 50%;
   color: #eef2d5;
   background: transparent;
   box-shadow: none;
   font-size: 1.25rem;
+  line-height: 0;
 }
 
 .settings-button svg {
