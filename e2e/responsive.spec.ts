@@ -269,6 +269,28 @@ test('keeps the settings control as an outlined white button', async ({ page }) 
   await expect(settingsButton.locator('svg')).toHaveCount(1)
 })
 
+test('keeps the settings gear complete at desktop and mobile sizes', async ({ page }) => {
+  for (const viewport of [
+    { width: 1440, height: 900 },
+    { width: 390, height: 844 },
+  ]) {
+    await page.setViewportSize(viewport)
+    await page.goto('/')
+
+    const geometry = await page.locator('.settings-button svg').evaluate((svg) => {
+      const path = svg.querySelector('path')
+      const bounds = path?.getBBox()
+      return {
+        width: bounds?.width ?? 0,
+        height: bounds?.height ?? 0,
+      }
+    })
+
+    expect(geometry.width).toBeGreaterThanOrEqual(17)
+    expect(geometry.height).toBeGreaterThanOrEqual(17)
+  }
+})
+
 test('closes settings with Escape or an outside click', async ({ page }) => {
   await page.goto('/')
   await page.getByRole('button', { name: 'Налаштування' }).click()
