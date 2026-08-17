@@ -298,6 +298,29 @@ test('centers the settings gear inside its button', async ({ page }) => {
   }
 })
 
+test('aligns the close icon with the settings values', async ({ page }) => {
+  for (const viewport of [
+    { width: 1440, height: 900 },
+    { width: 390, height: 844 },
+  ]) {
+    await page.setViewportSize(viewport)
+    await page.goto('/')
+    await page.getByRole('button', { name: 'Налаштування' }).click()
+
+    const edges = await page.evaluate(() => {
+      const close = document.querySelector('.close-button svg')?.getBoundingClientRect()
+      const value = document.querySelector('.range-value')?.getBoundingClientRect()
+
+      return {
+        closeRight: close?.right ?? 0,
+        valueRight: value?.right ?? 0,
+      }
+    })
+
+    expect(Math.abs(edges.closeRight - edges.valueRight)).toBeLessThan(1)
+  }
+})
+
 test('keeps the settings gear complete at desktop and mobile sizes', async ({ page }) => {
   for (const viewport of [
     { width: 1440, height: 900 },
